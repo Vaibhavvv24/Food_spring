@@ -1,5 +1,6 @@
 package com.example.foodOrder.repo;
 
+import com.example.foodOrder.dto.UserDto;
 import com.example.foodOrder.entity.User;
 import com.example.foodOrder.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,5 @@ public interface UserRepo extends JpaRepository<User,Long> {
     User findByRole(Role role);
 
     Optional<User> findByEmail(String email);
+
 }

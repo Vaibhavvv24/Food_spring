@@ -35,8 +35,9 @@ public class WebSecConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf().disable().authorizeHttpRequests(req->
                 req.requestMatchers("/api/auth/**").permitAll().
-                        anyRequest().authenticated()).sessionManagement(management->management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//                authenticationProvider(authProvider()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                        requestMatchers("/api/admin/**").hasAnyAuthority(Role.ADMIN.name()).requestMatchers("/api/owner/**").hasAnyAuthority(Role.OWNER.name()).
+                        anyRequest().authenticated()).sessionManagement(management->management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
+                authenticationProvider(authProvider()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();
 
@@ -59,4 +60,3 @@ public class WebSecConfig {
     }
 }
 
-//requestMatchers("/api/admin/**").hasAnyAuthority(Role.ADMIN.name()).requestMatchers("/api/owner/**").hasAnyAuthority(Role.OWNER.name()).

@@ -62,7 +62,7 @@ public class AuthCont {
             );
         }
         catch (BadCredentialsException badCredentialsException){
-            throw new BadCredentialsException("Incorrect username or passowrd");
+            throw new BadCredentialsException("Incorrect username or password");
         }
         catch (DisabledException d){
             response.sendError(HttpServletResponse.SC_NOT_FOUND,"User not active");
