@@ -7,9 +7,11 @@ import com.example.foodOrder.enums.Role;
 import com.example.foodOrder.repo.UserRepo;
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AuthServiceImpl implements AuthService{
 
     private final PasswordEncoder passwordEncoder;
@@ -39,7 +41,7 @@ public class AuthServiceImpl implements AuthService{
         User user=new User();
         user.setEmail(sign.getEmail());
         user.setRole(Role.CUSTOMER);
-        user.setName(sign.getPassword());
+        user.setName(sign.getName());
         user.setPhoneNum(sign.getPhoneNum());
         user.setPassword(passwordEncoder.encode(sign.getPassword()));
         User user1=userRepo.save(user);

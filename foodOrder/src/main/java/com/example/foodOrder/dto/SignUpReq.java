@@ -1,9 +1,8 @@
 package com.example.foodOrder.dto;
 
 public class SignUpReq {
-    private String email;
-
     private String name;
+    private String email;
 
     private String password;
 
@@ -13,9 +12,10 @@ public class SignUpReq {
 
     }
 
-    public SignUpReq(String email, String name, String password,String phoneNum) {
-        this.email = email;
+    public SignUpReq(String name,String email, String password,String phoneNum) {
         this.name = name;
+        this.email = email;
+
         this.password = password;
         this.phoneNum=phoneNum;
     }
@@ -51,6 +51,6 @@ public class SignUpReq {
     public void setPassword(String password) {
         this.password = password;
     }
-}
+
 
 }
