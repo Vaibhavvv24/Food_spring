@@ -1,6 +1,9 @@
 package com.example.foodOrder.dto;
 
 import jakarta.persistence.Lob;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.sql.Blob;
 
 public class ResDto {
     private Long id;
@@ -8,9 +11,40 @@ public class ResDto {
     private String name;
 
     private String address;
-    private byte[] img;
 
-    public ResDto(String name, String address, byte[] img) {
+    private Long ownerId;
+
+    private String ownerName;
+
+    private Blob img;
+
+//    private MultipartFile img1;
+
+//    public MultipartFile getImg1() {
+//        return img1;
+//    }
+//
+//    public void setImg1(MultipartFile img1) {
+//        this.img1 = img1;
+//    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public ResDto(String name, String address,Blob img) {
         this.name = name;
         this.address = address;
         this.img = img;
@@ -42,11 +76,11 @@ public class ResDto {
         this.address = address;
     }
 
-    public byte[] getImg() {
+    public Blob getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(Blob img) {
         this.img = img;
     }
 }

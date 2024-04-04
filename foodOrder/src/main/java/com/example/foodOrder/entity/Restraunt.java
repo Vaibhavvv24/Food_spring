@@ -1,7 +1,10 @@
 package com.example.foodOrder.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import java.sql.Blob;
 import java.util.List;
 
 @Entity
@@ -16,11 +19,25 @@ public class Restraunt {
 
     private String address;
 
+
+    @OneToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "owner_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User owner;
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     @Lob
   @Column(columnDefinition = "longblob")
-    private byte[] img;
+    private Blob img;
 
-    public Restraunt(String name, String address, byte[] img) {
+    public Restraunt(String name, String address,Blob img) {
         this.name = name;
         this.address = address;
         this.img = img;
@@ -52,11 +69,11 @@ public class Restraunt {
         this.address = address;
     }
 
-    public byte[] getImg() {
+    public Blob getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(Blob img) {
         this.img = img;
     }
 }
