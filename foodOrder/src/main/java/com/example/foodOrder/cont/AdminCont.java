@@ -36,12 +36,39 @@ public class AdminCont {
 //
 //}
     @PostMapping("/create")
-    public String addImagePost(@RequestParam("image") MultipartFile file,@RequestParam("name") String name,@RequestParam("address") String address,@RequestParam("ownerId") Long ownerId) throws IOException, SerialException, SQLException
-    {
+    public String addImagePost(@RequestParam("image") MultipartFile file,@RequestParam("name") String name,@RequestParam("address") String address,@RequestParam("ownerId") Long ownerId) throws IOException, SerialException, SQLException {
         byte[] bytes = file.getBytes();
         Blob blob = new SerialBlob(bytes);
-        adminService.createRes(name,address,blob,ownerId);
+        adminService.createRes(name, address, blob, ownerId);
         return "Success";
+    }
+
+    @GetMapping("/get/{restId}")
+    public ResponseEntity<ResDto> getRestraunt(@PathVariable Long restId){
+        ResDto resDto=adminService.getRes(restId);
+        if(resDto==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(resDto);
+    }
+    @GetMapping("/restraunt/{ownerId}")
+    public ResponseEntity<ResDto> getRestrauntByOwner(@PathVariable Long ownerId){
+        ResDto resDto=adminService.getResByOwner(ownerId);
+        if(resDto==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(resDto);
+    }
+
+    @DeleteMapping("/delete/{ownerId}")
+    public ResponseEntity<?> deleteByOwnerId(@PathVariable Long ownerId){
+        adminService.deleteResByOwner(ownerId);
+        return ResponseEntity.ok().body("deleted successfully");
+    }
+    @DeleteMapping("/restraunt/delete/{restId}")
+    public ResponseEntity<?> delete(@PathVariable Long restId){
+        adminService.deleteRes(restId);
+        return ResponseEntity.ok().body("deleted successfully by restId");
     }
     @GetMapping("/hello")
     public String sayHello(){

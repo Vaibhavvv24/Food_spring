@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ResRepo extends JpaRepository<Restraunt,Long> {
+    Restraunt findByOwnerId(Long ownerId);
 }

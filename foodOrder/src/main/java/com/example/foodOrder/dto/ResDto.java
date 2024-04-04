@@ -16,7 +16,7 @@ public class ResDto {
 
     private String ownerName;
 
-    private Blob img;
+    private String base64;
 
 //    private MultipartFile img1;
 
@@ -44,10 +44,10 @@ public class ResDto {
         this.ownerName = ownerName;
     }
 
-    public ResDto(String name, String address,Blob img) {
+    public ResDto(String name, String address,String base) {
         this.name = name;
         this.address = address;
-        this.img = img;
+        this.base64=base;
     }
     public ResDto(){
 
@@ -76,11 +76,11 @@ public class ResDto {
         this.address = address;
     }
 
-    public Blob getImg() {
-        return img;
+    public String getImg() {
+        return base64;
     }
 
-    public void setImg(Blob img) {
-        this.img = img;
+    public void setImg(String img) {
+        this.base64 = img;
     }
 }
