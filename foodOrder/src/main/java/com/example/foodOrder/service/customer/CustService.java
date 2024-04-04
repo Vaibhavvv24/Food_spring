@@ -6,4 +6,6 @@ public interface CustService {
     UserDto updateUser(UserDto userDto, Long userId);
 
     UserDto getUser(Long userId);
+
+    void deleteUser(Long userId);
 }

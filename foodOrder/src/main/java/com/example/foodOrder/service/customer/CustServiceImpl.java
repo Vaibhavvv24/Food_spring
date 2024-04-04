@@ -30,9 +30,20 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
+    public void deleteUser(Long userId) {
+        User user=userRepo.findById(userId).get();
+        System.out.println(user);
+        userRepo.delete(user);
+    }
+
+    @Override
     @Transactional
     public UserDto updateUser(UserDto userDto, Long userId) {
         User user=userRepo.findById(userId).get();
+        if(userId!=user.getId()){
+            System.out.println("not matching");
+            return null;
+        }
         if( userDto.getName()!=null && !userDto.getName().isEmpty()){
             user.setName(userDto.getName());
         }

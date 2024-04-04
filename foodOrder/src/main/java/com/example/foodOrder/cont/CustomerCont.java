@@ -35,4 +35,9 @@ public class CustomerCont {
         return ResponseEntity.ok().body(userDto);
 
     }
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId){
+        custService.deleteUser(userId);
+        return ResponseEntity.ok().body("User deleted Successfully");
+    }
 }
