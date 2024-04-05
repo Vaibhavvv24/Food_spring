@@ -1,6 +1,7 @@
 package com.example.foodOrder.cont;
 
 import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.service.owner.OwnerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,20 @@ public class OwnerCont {
         ownerService.deleteById(categoryId,restId);
         return ResponseEntity.ok().body("deleted category");
     }
+
+
+    //product routes
+    @PostMapping("/product")
+    public ResponseEntity<?> postProduct(@RequestParam("productName") String productName, @RequestParam("img")MultipartFile file,@RequestParam("price") int price,@RequestParam("restId") Long restId,@RequestParam("catId") Long catId) throws IOException, SQLException {
+        ProductDto productDto=new ProductDto();
+        byte[] bytes = file.getBytes();
+        Blob blob = new SerialBlob(bytes);
+        productDto=ownerService.createProd(productName,price,blob,restId,catId);
+        if(productDto==null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(productDto);
+    }
+
 
 }

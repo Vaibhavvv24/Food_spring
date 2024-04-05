@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.sql.Blob;
+
 @Entity
 @Table(name = "product")
 public class Product {
@@ -30,13 +32,13 @@ public class Product {
 
     @Lob
     @Column(columnDefinition = "longblob")
-    private byte[] img;
+    private Blob img;
 
     public Product(){
 
     }
 
-    public Product(String productName, Category category, int price, byte[] img) {
+    public Product(String productName, Category category, int price, Blob img) {
         this.productName = productName;
         this.category = category;
         this.price = price;
@@ -83,11 +85,11 @@ public class Product {
         this.restraunt = restraunt;
     }
 
-    public byte[] getImg() {
+    public Blob getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(Blob img) {
         this.img = img;
     }
 }

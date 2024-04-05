@@ -9,8 +9,6 @@ public class ProductDto {
 
     private String name;
 
-    private String description;
-
     private int price;
     private Long categoryid;
     private String categoryname;
@@ -19,13 +17,13 @@ public class ProductDto {
 
     private String restrauntName;
 
-    private byte[] returnedimg;
+    private String returnedimg;
 
-    public byte[] getReturnedimg() {
+    public String getReturnedimg() {
         return returnedimg;
     }
 
-    public void setReturnedimg(byte[] returnedimg) {
+    public void setReturnedimg(String returnedimg) {
         this.returnedimg = returnedimg;
     }
 
@@ -77,14 +75,6 @@ public class ProductDto {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -93,9 +83,8 @@ public class ProductDto {
         this.price = price;
     }
 
-    public ProductDto(String name, String description, int price,byte[] img) {
+    public ProductDto(String name, int price,String img) {
         this.name = name;
-        this.description = description;
         this.price = price;
         this.returnedimg=img;
     }

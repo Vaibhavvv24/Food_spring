@@ -1,9 +1,12 @@
 package com.example.foodOrder.service.owner;
 
 import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.entity.Category;
+import com.example.foodOrder.entity.Product;
 import com.example.foodOrder.entity.Restraunt;
 import com.example.foodOrder.repo.CatRepo;
+import com.example.foodOrder.repo.ProductRepo;
 import com.example.foodOrder.repo.ResRepo;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +41,12 @@ public class OwnerServiceImpl implements OwnerService{
 
     private final ResRepo repo;
 
-    public OwnerServiceImpl(CatRepo catRepo, ResRepo repo) {
+    private final ProductRepo productRepo;
+
+    public OwnerServiceImpl(CatRepo catRepo, ResRepo repo, ProductRepo productRepo) {
         this.catRepo = catRepo;
         this.repo = repo;
+        this.productRepo = productRepo;
     }
 
     @Override
@@ -81,6 +87,22 @@ public class OwnerServiceImpl implements OwnerService{
             return;
         }
         catRepo.delete(category);
+    }
+
+    @Override
+    public ProductDto createProd(String productName, int price, Blob blob, Long restId, Long catId) {
+        ProductDto productDto=new ProductDto();
+        Product product=new Product();
+        product.setPrice(price);
+        product.setProductName(productName);
+        Category category=catRepo.findById(catId).get();
+        product.setCategory(category);
+        Restraunt restraunt=repo.findById(restId).get();
+        product.setRestraunt(restraunt);
+        product.setImg(blob);
+        Product savedProd=productRepo.save(product);
+        productDto.setId(savedProd.getId());
+        return productDto;
     }
 
 
