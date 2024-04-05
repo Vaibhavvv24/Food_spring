@@ -3,16 +3,14 @@ package com.example.foodOrder.cont;
 import com.example.foodOrder.dto.CategoryDto;
 import com.example.foodOrder.service.owner.OwnerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/owner")
@@ -37,4 +35,18 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(categoryDto);
     }
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<?> getAll(@PathVariable Long categoryId){
+        CategoryDto categoryDto=ownerService.getCatbyId(categoryId);
+        if(categoryDto==null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(categoryDto);
+    }
+    @DeleteMapping("/category/{categoryId}/delete/{restId}")
+    public ResponseEntity<?> delete(@PathVariable Long categoryId, @PathVariable Long restId){
+        ownerService.deleteById(categoryId,restId);
+        return ResponseEntity.ok().body("deleted category");
+    }
+
 }

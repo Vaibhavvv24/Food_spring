@@ -11,6 +11,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.Base64;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class OwnerServiceImpl implements OwnerService{
@@ -54,4 +57,31 @@ public class OwnerServiceImpl implements OwnerService{
         categoryDto.setId(category1.getId());
         return categoryDto;
     }
+
+    @Override
+    public CategoryDto getCatbyId(Long CategoryId) {
+        Category category=catRepo.findById(CategoryId).get();
+        CategoryDto categoryDto=new CategoryDto();
+        categoryDto.setName(category.getName());
+        categoryDto.setDescription(category.getDescription());
+        Blob blob= category.getImg();
+        String base64=blobToBase64(blob);
+        categoryDto.setReturnedimage(base64);
+        categoryDto.setId(category.getId());
+        categoryDto.setResId(category.getRestraunt().getId());
+        categoryDto.setRestName(category.getRestraunt().getName());
+        return categoryDto;
+    }
+
+    @Override
+    public void deleteById(Long categoryId, Long restId) {
+        Category category=catRepo.findById(categoryId).get();
+        if(!Objects.equals(category.getRestraunt().getId(), restId)){
+            System.out.println("Not equal");
+            return;
+        }
+        catRepo.delete(category);
+    }
+
+
 }

@@ -1,21 +1,30 @@
 package com.example.foodOrder.service.customer;
 
+import com.example.foodOrder.dto.CategoryDto;
 import com.example.foodOrder.dto.UserDto;
+import com.example.foodOrder.entity.Category;
 import com.example.foodOrder.entity.User;
+import com.example.foodOrder.repo.CatRepo;
 import com.example.foodOrder.repo.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CustServiceImpl implements CustService{
 
     private final UserRepo userRepo;
 
+    private final CatRepo catRepo;
+
     private final PasswordEncoder passwordEncoder;
 
-    public CustServiceImpl(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+    public CustServiceImpl(UserRepo userRepo, CatRepo catRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.catRepo = catRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -59,6 +68,26 @@ public class CustServiceImpl implements CustService{
         newUserDto.setEmail(updatedUser.getEmail());
         newUserDto.setPhoneNum(updatedUser.getPhoneNum());
         return newUserDto;
+
+    }
+    @Override
+    public List<CategoryDto> getCats() {
+        return catRepo.findAll().stream().map(Category::getCatDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryDto> getCatbyRes(Long restId) {
+        return catRepo.findALlByRestrauntId(restId).stream().map(Category::getCatDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryDto> getCatbyResName(String restName) {
+        return catRepo.findAllByRestrauntNameContaining(restName).stream().map(Category::getCatDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryDto> getCatbyName(String name) {
+        return catRepo.findALlByNameContaining(name).stream().map(Category::getCatDto).collect(Collectors.toList());
 
     }
 }
