@@ -11,7 +11,7 @@ public class CategoryDto {
 
     private String description;
 
-    private byte[] returnedimage;
+    private String base64;
 
     private Long resId;
 
@@ -37,10 +37,10 @@ public class CategoryDto {
 
     }
 
-    public CategoryDto(String name, String description,byte[] returnedimage) {
+    public CategoryDto(String name, String description,String base) {
         this.name = name;
         this.description = description;
-        this.returnedimage = returnedimage;
+        this.base64=base;
     }
 
     public Long getId() {
@@ -67,11 +67,11 @@ public class CategoryDto {
         this.description = description;
     }
 
-    public byte[] getReturnedimage() {
-        return returnedimage;
+    public String getReturnedimage() {
+        return base64;
     }
 
-    public void setReturnedimage(byte[] returnedimage) {
-        this.returnedimage = returnedimage;
+    public void setReturnedimage(String returnedimage) {
+        this.base64= returnedimage;
     }
 }

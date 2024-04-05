@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.sql.Blob;
 import java.util.List;
 
 @Entity
@@ -22,13 +23,20 @@ public class Category {
     @JsonIgnore
     private Restraunt restraunt;
 
+    private String description;
+
+
+    public Category(){
+
+    }
+
     @Lob
     @Column(columnDefinition = "longblob")
-    private byte[] img;
-
-    public Category(String name, byte[] img) {
+    private Blob img;
+    public Category(String name, Blob img,String des) {
         this.name = name;
         this.img = img;
+        this.description=des;
     }
 
     public Long getId() {
@@ -56,11 +64,19 @@ public class Category {
         this.restraunt = restraunt;
     }
 
-    public byte[] getImg() {
+    public Blob getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(Blob img) {
         this.img = img;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
