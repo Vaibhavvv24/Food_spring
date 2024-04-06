@@ -19,4 +19,6 @@ public interface OwnerService {
     List<ProductDto> getProducts();
 
     ProductDto getProductbyId(Long productId);
+
+    void deleteByProductId(Long prodId, Long restId);
 }

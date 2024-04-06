@@ -129,5 +129,15 @@ public class OwnerServiceImpl implements OwnerService{
         return productDto;
     }
 
+    @Override
+    public void deleteByProductId(Long prodId, Long restId) {
+        Product product=productRepo.findById(prodId).get();
+        if(!Objects.equals(product.getRestraunt().getId(), restId)){
+            System.out.println("Not equal");
+            return;
+        }
+        productRepo.delete(product);
+    }
+
 
 }

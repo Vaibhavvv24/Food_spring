@@ -2,6 +2,7 @@ package com.example.foodOrder.cont;
 
 import com.example.foodOrder.dto.CategoryDto;
 import com.example.foodOrder.dto.ProductDto;
+import com.example.foodOrder.dto.ResDto;
 import com.example.foodOrder.service.owner.OwnerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -81,6 +82,13 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(productDto);
     }
+    @DeleteMapping("{restId}/products/delete/{prodId}")
+    public ResponseEntity<?> deleteByProdId(@PathVariable Long prodId,@PathVariable Long restId){
+        ownerService.deleteByProductId(prodId,restId);
+        return ResponseEntity.ok().body("deleted product");
+
+    }
+
 
 
 }
