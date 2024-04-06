@@ -8,6 +8,7 @@ import com.example.foodOrder.entity.Restraunt;
 import com.example.foodOrder.repo.CatRepo;
 import com.example.foodOrder.repo.ProductRepo;
 import com.example.foodOrder.repo.ResRepo;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -102,6 +103,29 @@ public class OwnerServiceImpl implements OwnerService{
         product.setImg(blob);
         Product savedProd=productRepo.save(product);
         productDto.setId(savedProd.getId());
+        return productDto;
+    }
+
+    @Override
+    public List<ProductDto> getProducts() {
+        return productRepo.findAll().stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDto getProductbyId(Long productId) {
+        Product product=productRepo.findById(productId).get();
+        ProductDto productDto=new ProductDto();
+        productDto.setPrice(product.getPrice());
+        productDto.setId(product.getId());
+
+        productDto.setRestrauntId(product.getRestraunt().getId());
+        productDto.setRestrauntName(product.getRestraunt().getName());
+        productDto.setCategoryid(product.getCategory().getId());
+        productDto.setCategoryname(product.getCategory().getName());
+        productDto.setName(product.getProductName());
+        Blob blob= product.getImg();
+        String base64=blobToBase64(blob);
+        productDto.setReturnedimg(base64);
         return productDto;
     }
 

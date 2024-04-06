@@ -63,6 +63,24 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(productDto);
     }
+    @GetMapping("/products")
+    public ResponseEntity<?> getProducts(){
+        List<ProductDto> productDtos=ownerService.getProducts();
+        System.out.println(productDtos.size());
+        if(productDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDtos);
+    }
+    @GetMapping("/products/{productId}")
+    public ResponseEntity<?> getProductById(@PathVariable Long productId){
+    ProductDto productDto=ownerService.getProductbyId(productId);
+        System.out.println(productDto);
+        if(productDto==null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDto);
+    }
 
 
 }
