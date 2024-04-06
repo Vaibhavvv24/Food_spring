@@ -1,10 +1,13 @@
 package com.example.foodOrder.service.customer;
 
 import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.dto.UserDto;
 import com.example.foodOrder.entity.Category;
+import com.example.foodOrder.entity.Product;
 import com.example.foodOrder.entity.User;
 import com.example.foodOrder.repo.CatRepo;
+import com.example.foodOrder.repo.ProductRepo;
 import com.example.foodOrder.repo.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,11 +23,13 @@ public class CustServiceImpl implements CustService{
 
     private final CatRepo catRepo;
 
+    private final ProductRepo productRepo;
     private final PasswordEncoder passwordEncoder;
 
-    public CustServiceImpl(UserRepo userRepo, CatRepo catRepo, PasswordEncoder passwordEncoder) {
+    public CustServiceImpl(UserRepo userRepo, CatRepo catRepo, ProductRepo productRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.catRepo = catRepo;
+        this.productRepo = productRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -89,5 +94,25 @@ public class CustServiceImpl implements CustService{
     public List<CategoryDto> getCatbyName(String name) {
         return catRepo.findALlByNameContaining(name).stream().map(Category::getCatDto).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<ProductDto> getProds(Long restId) {
+        return productRepo.findAllByRestrauntId(restId).stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDto> getProdByCat(Long restId, Long catId) {
+        return productRepo.findAllByRestrauntIdAndCategoryId(restId,catId).stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDto> getProductbyNameandRestraunt(String productName,Long restrauntId) {
+        return productRepo.findAllByRestrauntIdAndProductNameContaining(restrauntId,productName).stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDto> getProductbyNameandRestrauntandCat(String productName, Long restrauntId, Long catId) {
+        return productRepo.findAllByRestrauntIdAndCategoryIdAndProductNameContaining(restrauntId,catId,productName).stream().map(Product::getProductDto).collect(Collectors.toList());
     }
 }

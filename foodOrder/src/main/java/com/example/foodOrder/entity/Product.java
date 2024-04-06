@@ -1,15 +1,36 @@
 package com.example.foodOrder.entity;
 
+import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.ProductDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.Blob;
+import java.util.Base64;
 
 @Entity
 @Table(name = "product")
 public class Product {
+
+    public static String blobToBase64(Blob blob) {
+        try (InputStream inputStream = blob.getBinaryStream()) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -91,5 +112,20 @@ public class Product {
 
     public void setImg(Blob img) {
         this.img = img;
+    }
+
+    public ProductDto getProductDto() {
+        ProductDto productDto=new ProductDto();
+        productDto.setName(productName);
+        productDto.setPrice(price);
+        Blob blob=img;
+        String base64=blobToBase64(blob);
+        productDto.setReturnedimg(base64);
+        productDto.setId(id);
+        productDto.setRestrauntId(restraunt.getId());
+        productDto.setCategoryid(category.getId());
+        productDto.setCategoryname(category.getName());
+        productDto.setRestrauntName(restraunt.getName());
+        return productDto;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.foodOrder.service.customer;
 
 import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.dto.UserDto;
 
 import java.util.List;
@@ -19,4 +20,12 @@ public interface CustService {
     List<CategoryDto> getCatbyResName(String restName);
 
     List<CategoryDto> getCatbyName(String name);
+
+    List<ProductDto> getProds(Long restId);
+
+    List<ProductDto> getProdByCat(Long restId, Long catId);
+
+    List<ProductDto> getProductbyNameandRestraunt(String productName,Long restrauntId);
+
+    List<ProductDto> getProductbyNameandRestrauntandCat(String productName, Long restrauntId, Long catId);
 }

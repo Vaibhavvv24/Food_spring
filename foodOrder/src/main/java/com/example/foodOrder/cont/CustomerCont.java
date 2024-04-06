@@ -1,6 +1,7 @@
 package com.example.foodOrder.cont;
 
 import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.dto.UserDto;
 import com.example.foodOrder.repo.UserRepo;
 import com.example.foodOrder.service.UserService;
@@ -78,5 +79,44 @@ public class CustomerCont {
         return ResponseEntity.ok().body(categoryDtos);
 
     }
+    @GetMapping("/products/{restId}")
+    public ResponseEntity<?> getProducts(@PathVariable Long restId){
+        List<ProductDto> productDtos=custService.getProds(restId);
+        System.out.println(productDtos.size());
+        if(productDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDtos);
+    }
+    @GetMapping("/category/{catId}/products/{restId}")
+    public ResponseEntity<?> getProductsByCat(@PathVariable Long restId,@PathVariable Long catId){
+        List<ProductDto> productDtos=custService.getProdByCat(restId,catId);
+        System.out.println(productDtos.size());
+        if(productDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDtos);
+    }
+    @GetMapping("/products/search/{restrauntId}/restraunt/{productName}")
+    public ResponseEntity<?> getProductsbyName(@PathVariable String productName,@PathVariable Long restrauntId) {
+        List<ProductDto> productDtos = custService.getProductbyNameandRestraunt(productName,restrauntId);
+        System.out.println(productDtos.size());
+        if (productDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDtos);
+
+    }
+    @GetMapping("/products/search/{restrauntId}/restraunt/{catId}/category/{productName}")
+    public ResponseEntity<?> getProductsbyNameandCat(@PathVariable String productName,@PathVariable Long restrauntId,@PathVariable Long catId) {
+        List<ProductDto> productDtos = custService.getProductbyNameandRestrauntandCat(productName,restrauntId,catId);
+        System.out.println(productDtos.size());
+        if (productDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDtos);
+
+    }
+
 
 }
