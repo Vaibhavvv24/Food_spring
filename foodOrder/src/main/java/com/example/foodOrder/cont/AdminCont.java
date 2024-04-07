@@ -38,6 +38,10 @@ public class AdminCont {
 //}
     @PostMapping("/create")
     public String addImagePost(@RequestParam("image") MultipartFile file,@RequestParam("name") String name,@RequestParam("address") String address,@RequestParam("ownerId") Long ownerId) throws IOException, SerialException, SQLException {
+        System.out.println(file);
+        System.out.println(name);
+        System.out.println(address);
+        System.out.println(ownerId);
         byte[] bytes = file.getBytes();
         Blob blob = new SerialBlob(bytes);
         adminService.createRes(name, address, blob, ownerId);
