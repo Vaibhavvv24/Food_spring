@@ -1,9 +1,11 @@
 package com.example.foodOrder.service.customer;
 
+import com.example.foodOrder.dto.CartItemDto;
 import com.example.foodOrder.dto.CategoryDto;
 import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.dto.UserDto;
 
+import java.sql.Blob;
 import java.util.List;
 
 public interface CustService {
@@ -28,4 +30,6 @@ public interface CustService {
     List<ProductDto> getProductbyNameandRestraunt(String productName,Long restrauntId);
 
     List<ProductDto> getProductbyNameandRestrauntandCat(String productName, Long restrauntId, Long catId);
+
+    CartItemDto addToCart(String productName, int price, Blob blob, Long restId, Long catId, Long productId,Long userId);
 }

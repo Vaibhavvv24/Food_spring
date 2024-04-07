@@ -1,15 +1,25 @@
 package com.example.foodOrder.cont;
 
+import com.example.foodOrder.dto.CartItemDto;
 import com.example.foodOrder.dto.CategoryDto;
 import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.dto.UserDto;
+import com.example.foodOrder.entity.Cart;
+import com.example.foodOrder.entity.User;
+import com.example.foodOrder.repo.CartRepo;
 import com.example.foodOrder.repo.UserRepo;
 import com.example.foodOrder.service.UserService;
 import com.example.foodOrder.service.customer.CustService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -17,7 +27,8 @@ import java.util.List;
 public class CustomerCont {
     private final CustService custService;
 
-    public CustomerCont( CustService custService) {
+
+    public CustomerCont(CustService custService) {
         this.custService = custService;
 
     }
@@ -116,6 +127,18 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(productDtos);
 
+    }
+    @PostMapping("/products/{userId}/add/{productId}")
+    public ResponseEntity<?> addToCart(@RequestParam("productName") String productName, @RequestParam("img") MultipartFile file, @RequestParam("price") int price, @RequestParam("restId") Long restId,@RequestParam("catId") Long catId ,@PathVariable Long productId,@PathVariable Long userId) throws IOException, SQLException {
+
+        CartItemDto cartItemDto;
+        byte[] bytes = file.getBytes();
+        Blob blob = new SerialBlob(bytes);
+        cartItemDto = custService.addToCart(productName, price, blob, restId, catId, productId,userId);
+        if (cartItemDto == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(cartItemDto);
     }
 
 

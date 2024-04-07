@@ -1,18 +1,16 @@
 package com.example.foodOrder.service.customer;
 
+import com.example.foodOrder.dto.CartItemDto;
 import com.example.foodOrder.dto.CategoryDto;
 import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.dto.UserDto;
-import com.example.foodOrder.entity.Category;
-import com.example.foodOrder.entity.Product;
-import com.example.foodOrder.entity.User;
-import com.example.foodOrder.repo.CatRepo;
-import com.example.foodOrder.repo.ProductRepo;
-import com.example.foodOrder.repo.UserRepo;
+import com.example.foodOrder.entity.*;
+import com.example.foodOrder.repo.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Blob;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,12 +22,21 @@ public class CustServiceImpl implements CustService{
     private final CatRepo catRepo;
 
     private final ProductRepo productRepo;
+
+    private final CartRepo cartRepo;
+
+    private final ResRepo repo;
+
+    private final CartItemRepo cartItemRepo;
     private final PasswordEncoder passwordEncoder;
 
-    public CustServiceImpl(UserRepo userRepo, CatRepo catRepo, ProductRepo productRepo, PasswordEncoder passwordEncoder) {
+    public CustServiceImpl(UserRepo userRepo, CatRepo catRepo, ProductRepo productRepo, CartRepo cartRepo, ResRepo repo, CartItemRepo cartItemRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.catRepo = catRepo;
         this.productRepo = productRepo;
+        this.cartRepo = cartRepo;
+        this.repo = repo;
+        this.cartItemRepo = cartItemRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -114,5 +121,25 @@ public class CustServiceImpl implements CustService{
     @Override
     public List<ProductDto> getProductbyNameandRestrauntandCat(String productName, Long restrauntId, Long catId) {
         return productRepo.findAllByRestrauntIdAndCategoryIdAndProductNameContaining(restrauntId,catId,productName).stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public CartItemDto addToCart(String productName, int price, Blob blob, Long restId, Long catId, Long productId,Long userId) {
+        CartItem cartItem=new CartItem();
+        Restraunt restraunt=repo.findById(restId).get();
+        Category category=catRepo.findById(catId).get();
+        Product product=productRepo.findById(productId).get();
+        cartItem.setRestraunt(restraunt);
+        User user=userRepo.findById(userId).get();
+        Cart cart=cartRepo.findByCustomer(user);
+        cartItem.setCart(cart);
+        cartItem.setProduct(product);
+        cartItem.setCategory(category);
+        cart.setTotalPrice(cart.getTotalPrice()+price);
+        cartRepo.save(cart);
+        CartItemDto cartItemDto=new CartItemDto();
+        CartItem savedCartItem=cartItemRepo.save(cartItem);
+        cartItemDto.setId(savedCartItem.getId());
+        return cartItemDto;
     }
 }

@@ -4,7 +4,9 @@ import com.example.foodOrder.dto.AuthResponse;
 import com.example.foodOrder.dto.LoginReq;
 import com.example.foodOrder.dto.SignUpReq;
 import com.example.foodOrder.dto.UserDto;
+import com.example.foodOrder.entity.Cart;
 import com.example.foodOrder.entity.User;
+import com.example.foodOrder.enums.Role;
 import com.example.foodOrder.repo.UserRepo;
 import com.example.foodOrder.service.auth.AuthService;
 import com.example.foodOrder.utils.JwtUtils;
@@ -76,6 +78,7 @@ public class AuthCont {
             authenticationResponse.setJwt(jwt);
             authenticationResponse.setRole(user.get().getRole());
             authenticationResponse.setId(user.get().getId());
+
         }
         return authenticationResponse;
 
