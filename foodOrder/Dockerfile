@@ -11,7 +11,7 @@ COPY src ./src
 
 RUN mvn clean install -DskipTests
 
-# Stage 2: Build the docker image
+# Stage 2: Build the docker image.
 FROM openjdk:17-jdk-alpine AS production-stage
 
 WORKDIR /my-app
