@@ -34,4 +34,8 @@ public interface CustService {
     CartItemDto addToCart(String productName, int price, Blob blob, Long restId, Long catId, Long productId,Long userId);
 
     List<CartItemDto> getCart(Long userId);
+
+    void updateCart(Long userId, Long cartItemId);
+
+    void clearCart(Long userId);
 }

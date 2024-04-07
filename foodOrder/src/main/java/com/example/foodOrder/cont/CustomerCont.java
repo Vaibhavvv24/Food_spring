@@ -130,6 +130,9 @@ public class CustomerCont {
         return ResponseEntity.ok().body(productDtos);
 
     }
+
+    //cart operations
+
     @PostMapping("/products/{userId}/add/{productId}")
     public ResponseEntity<?> addToCart(@RequestParam("productName") String productName, @RequestParam("img") MultipartFile file, @RequestParam("price") int price, @RequestParam("restId") Long restId,@RequestParam("catId") Long catId ,@PathVariable Long productId,@PathVariable Long userId) throws IOException, SQLException {
 
@@ -151,6 +154,18 @@ public class CustomerCont {
             return ResponseEntity.badRequest().body(map);
         }
         return ResponseEntity.ok().body(cartItemDtoList);
+    }
+    @PutMapping("/cart/{userId}/update/{cartItemId}")
+    public ResponseEntity<?> updateCart(@PathVariable Long userId,@PathVariable Long cartItemId){
+        custService.updateCart(userId,cartItemId);
+        return ResponseEntity.ok().body("Updated cart");
+    }
+    @DeleteMapping("/cart/{userId}/delete")
+    public ResponseEntity<?> deleteCart(@PathVariable Long userId){
+        custService.clearCart(userId);
+        Map<String,String> msg=new HashMap<>();
+        msg.put("Message","Your cart is empty");
+        return ResponseEntity.ok().body(msg);
     }
 
 

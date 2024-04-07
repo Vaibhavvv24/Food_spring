@@ -186,4 +186,28 @@ public class CustServiceImpl implements CustService{
         }
         return cartItemDtoList;
     }
+
+    @Override
+    public void updateCart(Long userId, Long cartItemId) {
+        User user=userRepo.findById(userId).get();
+        Cart cart=cartRepo.findByCustomer(user);
+        CartItem cartItem=cartItemRepo.findById(cartItemId).get();
+        cart.setTotalPrice(cart.getTotalPrice()-cartItem.getProduct().getPrice());
+        cartItemRepo.delete(cartItem);
+        cartRepo.save(cart);
+
+    }
+
+    @Override
+    public void clearCart(Long userId) {
+        User user=userRepo.findById(userId).get();
+        Cart cart=cartRepo.findByCustomer(user);
+        List<CartItem> cartItems=cartItemRepo.findAllByCart(cart);
+        for(CartItem cartItem:cartItems){
+            cartItemRepo.delete(cartItem);
+        }
+        cart.setTotalPrice(0);
+        cartRepo.save(cart);
+
+    }
 }
