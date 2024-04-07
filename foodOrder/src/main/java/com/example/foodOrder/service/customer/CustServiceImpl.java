@@ -10,12 +10,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class CustServiceImpl implements CustService{
+
+
+    public static String blobToBase64(Blob blob) {
+        try (InputStream inputStream = blob.getBinaryStream()) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     private final UserRepo userRepo;
 
@@ -141,5 +162,28 @@ public class CustServiceImpl implements CustService{
         CartItem savedCartItem=cartItemRepo.save(cartItem);
         cartItemDto.setId(savedCartItem.getId());
         return cartItemDto;
+    }
+
+    @Override
+    public List<CartItemDto> getCart(Long userId) {
+        User user=userRepo.findById(userId).get();
+        Cart cart=cartRepo.findByCustomer(user);
+        List<CartItem> cartItems=cartItemRepo.findAllByCart(cart);
+        List<CartItemDto> cartItemDtoList=new ArrayList<>();
+        for(CartItem cartItem:cartItems){
+            CartItemDto cartItemDto=new CartItemDto();
+            cartItemDto.setCartId(cartItem.getCart().getId());
+            cartItemDto.setId(cartItem.getId());
+            cartItemDto.setProductId(cartItem.getProduct().getId());
+            Blob blob=cartItem.getProduct().getImg();
+            String base64=blobToBase64(blob);
+
+            cartItemDto.setProductImg(base64);
+            cartItemDto.setRestId(cartItem.getRestraunt().getId());
+            cartItemDto.setProductPrice(cartItem.getProduct().getPrice());
+            cartItemDto.setRestrauntName(cartItem.getRestraunt().getName());
+            cartItemDtoList.add(cartItemDto);
+        }
+        return cartItemDtoList;
     }
 }

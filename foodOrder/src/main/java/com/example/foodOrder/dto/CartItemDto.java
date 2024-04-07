@@ -18,7 +18,7 @@ public class CartItemDto {
 
     private Long productId;
 
-    private Blob productImg;
+    private String productImg;
 
     private int productPrice;
 
@@ -48,11 +48,11 @@ public class CartItemDto {
         this.productId = productId;
     }
 
-    public Blob getProductImg() {
+    public String getProductImg() {
         return productImg;
     }
 
-    public void setProductImg(Blob productImg) {
+    public void setProductImg(String productImg) {
         this.productImg = productImg;
     }
 

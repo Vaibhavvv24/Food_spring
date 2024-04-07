@@ -18,7 +18,9 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -139,6 +141,16 @@ public class CustomerCont {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().body(cartItemDto);
+    }
+    @GetMapping("/cart/{userId}")
+    public ResponseEntity<?> getCart(@PathVariable Long userId){
+        List<CartItemDto> cartItemDtoList=custService.getCart(userId);
+        if(cartItemDtoList.isEmpty()){
+            Map<String,String> map=new HashMap<>();
+            map.put("message","Your cart is empty");
+            return ResponseEntity.badRequest().body(map);
+        }
+        return ResponseEntity.ok().body(cartItemDtoList);
     }
 
 
