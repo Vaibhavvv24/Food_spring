@@ -17,6 +17,7 @@ import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AdminCont {
     private final AdminService adminService;
 

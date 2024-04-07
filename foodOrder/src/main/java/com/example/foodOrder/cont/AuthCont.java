@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class AuthCont {
     private final AuthService authService;
