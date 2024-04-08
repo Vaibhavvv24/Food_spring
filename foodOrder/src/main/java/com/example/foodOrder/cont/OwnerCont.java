@@ -12,7 +12,9 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/owner")
@@ -38,8 +40,17 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(categoryDto);
     }
+    @GetMapping("/categories/{restId}")
+    public ResponseEntity<?> getByRes(@PathVariable Long restId){
+        List<CategoryDto> categoryDtos=ownerService.getCatbyResOwner(restId);
+        if(categoryDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(categoryDtos);
+
+    }
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<?> getAll(@PathVariable Long categoryId){
+    public ResponseEntity<?> getCat(@PathVariable Long categoryId){
         CategoryDto categoryDto=ownerService.getCatbyId(categoryId);
         if(categoryDto==null) {
             return ResponseEntity.notFound().build();
@@ -49,7 +60,9 @@ public class OwnerCont {
     @DeleteMapping("/category/{categoryId}/delete/{restId}")
     public ResponseEntity<?> delete(@PathVariable Long categoryId, @PathVariable Long restId){
         ownerService.deleteById(categoryId,restId);
-        return ResponseEntity.ok().body("deleted category");
+        Map<String,String> deletemap=new HashMap<>();
+        deletemap.put("message","deleted successfully"+categoryId);
+        return ResponseEntity.ok().body(deletemap);
     }
 
 

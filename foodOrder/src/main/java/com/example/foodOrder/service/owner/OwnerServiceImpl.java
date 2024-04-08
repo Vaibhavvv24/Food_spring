@@ -139,5 +139,10 @@ public class OwnerServiceImpl implements OwnerService{
         productRepo.delete(product);
     }
 
+    @Override
+    public List<CategoryDto> getCatbyResOwner(Long restId) {
+        return catRepo.findALlByRestrauntId(restId).stream().map(Category::getCatDto).collect(Collectors.toList());
+    }
+
 
 }

@@ -6,6 +6,9 @@ import Navbar from "./components/Navbar";
 import AdminDashboard from "./pages/AdminDashboard";
 import RestrauntAdminSide from "./pages/RestrauntAdminSide";
 import RestrauntView from "./pages/RestrauntView";
+import OwnerDashboard from "./pages/OwnerDashboard";
+import OwnerCategories from "./pages/OwnerCategories";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   return (
@@ -24,6 +27,12 @@ function App() {
             path="/admin/dashboard/restraunt/:id"
             element={<RestrauntView />}
           />
+          <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+          <Route
+            path="/owner/dashboard/categories/:id"
+            element={<OwnerCategories />}
+          />
+          <Route path="/owner/:catid/product/:id" element={<AddProduct />} />
         </Routes>
       </BrowserRouter>
     </div>
