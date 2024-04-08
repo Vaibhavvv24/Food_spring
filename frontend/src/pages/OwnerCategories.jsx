@@ -66,10 +66,10 @@ const OwnerCategories = () => {
               Description: {category.description}
             </p>
             <p className="text-xl text-center">Restaurant: {category.restId}</p>
-            <Base64decode base64String={category.returnedimage} />
+            <Base64decode base64String={category.returnedimg} />
             <button
               className="p-2 bg-green-200 rounded-md "
-              onClick={() => navigate(`/owner/${category.id}/products`)}
+              onClick={() => navigate(`/owner/products/${id}`)}
             >
               View products
             </button>

@@ -107,8 +107,8 @@ public class OwnerServiceImpl implements OwnerService{
     }
 
     @Override
-    public List<ProductDto> getProducts() {
-        return productRepo.findAll().stream().map(Product::getProductDto).collect(Collectors.toList());
+    public List<ProductDto> getProducts(Long restId) {
+        return productRepo.findAllByRestrauntId(restId).stream().map(Product::getProductDto).collect(Collectors.toList());
     }
 
     @Override

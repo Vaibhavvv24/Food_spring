@@ -10,6 +10,8 @@ import OwnerDashboard from "./pages/OwnerDashboard";
 import OwnerCategories from "./pages/OwnerCategories";
 import AddProduct from "./pages/AddProduct";
 
+import ProductsResOwner from "./pages/ProductsResOwner";
+
 function App() {
   return (
     <div>
@@ -33,6 +35,7 @@ function App() {
             element={<OwnerCategories />}
           />
           <Route path="/owner/:catid/product/:id" element={<AddProduct />} />
+          <Route path="/owner/products/:id" element={<ProductsResOwner />} />
         </Routes>
       </BrowserRouter>
     </div>
