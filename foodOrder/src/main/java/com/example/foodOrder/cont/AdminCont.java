@@ -14,6 +14,8 @@ import javax.sql.rowset.serial.SerialException;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -73,7 +75,9 @@ public class AdminCont {
     @DeleteMapping("/restraunt/delete/{restId}")
     public ResponseEntity<?> delete(@PathVariable Long restId){
         adminService.deleteRes(restId);
-        return ResponseEntity.ok().body("deleted successfully by restId");
+        Map<String,String> deletemap=new HashMap<>();
+        deletemap.put("message","deleted successfully"+restId);
+        return ResponseEntity.ok().body(deletemap);
     }
     @GetMapping("/hello")
     public String sayHello(){

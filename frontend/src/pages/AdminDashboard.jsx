@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [name, setName] = React.useState("");
@@ -7,6 +8,7 @@ const AdminDashboard = () => {
   const [image, setImage] = React.useState(null);
   const [ownerId, setOwnerId] = React.useState("");
 
+  const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const handleSubmit = async (e) => {
@@ -31,6 +33,10 @@ const AdminDashboard = () => {
         }
       );
       console.log("Response:", response.data);
+      alert("Restaurant added successfully");
+
+      navigate("/admin/dashboard/restraunts");
+
       // Handle response as needed
     } catch (error) {
       console.error("Error uploading file:", error);
