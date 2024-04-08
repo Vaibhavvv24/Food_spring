@@ -90,12 +90,16 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void deleteResByOwner(Long ownerId) {
         Restraunt restraunt=repo.findByOwnerId(ownerId);
+        User user=userRepo.findById(ownerId).get();
+        user.setRole(Role.CUSTOMER);
         repo.delete(restraunt);
     }
 
     @Override
     public void deleteRes(Long restId) {
         Restraunt restraunt=repo.findById(restId).get();
+        User user=restraunt.getOwner();
+        user.setRole(Role.CUSTOMER);
         repo.delete(restraunt);
     }
 }

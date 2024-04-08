@@ -35,6 +35,10 @@ const Login = () => {
       navigate("/");
       window.location.reload();
     }
+    if (data.role === "OWNER") {
+      navigate("/owner/dashboard");
+      window.location.reload();
+    }
     console.log(data);
   };
 

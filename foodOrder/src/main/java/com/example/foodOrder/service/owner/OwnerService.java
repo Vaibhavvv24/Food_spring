@@ -21,4 +21,7 @@ public interface OwnerService {
     ProductDto getProductbyId(Long productId);
 
     void deleteByProductId(Long prodId, Long restId);
+
+
+    List<CategoryDto> getCatbyResOwner(Long restId);
 }
