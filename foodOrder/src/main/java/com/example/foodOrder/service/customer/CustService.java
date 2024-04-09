@@ -28,7 +28,7 @@ public interface CustService {
 
     List<ProductDto> getProductbyNameandRestrauntandCat(String productName, Long restrauntId, Long catId);
 
-    CartItemDto addToCart(String productName, int price, Blob blob, Long restId, Long catId, Long productId,Long userId);
+    CartItemDto addToCart(CartRequest cartRequest,Long productId,Long userId);
 
     List<CartItemDto> getCart(Long userId);
 

@@ -97,7 +97,7 @@ public class CustomerCont {
         return ResponseEntity.ok().body(categoryDtos);
 
     }
-    @GetMapping("/products/{productId}")
+    @GetMapping("/product/{productId}")
     public ResponseEntity<?> getProductById(@PathVariable Long productId){
         ProductDto productDto=custService.getProductbyId(productId);
         System.out.println(productDto);
@@ -150,12 +150,12 @@ public class CustomerCont {
     //cart operations
 
     @PostMapping("/products/{userId}/add/{productId}")
-    public ResponseEntity<?> addToCart(@RequestParam("productName") String productName, @RequestParam("img") MultipartFile file, @RequestParam("price") int price, @RequestParam("restId") Long restId,@RequestParam("catId") Long catId ,@PathVariable Long productId,@PathVariable Long userId) throws IOException, SQLException {
-
+    public ResponseEntity<?> addToCart(@RequestBody CartRequest cartRequest,@PathVariable Long userId,@PathVariable Long productId) throws IOException, SQLException {
+        System.out.println(productId);
         CartItemDto cartItemDto;
-        byte[] bytes = file.getBytes();
-        Blob blob = new SerialBlob(bytes);
-        cartItemDto = custService.addToCart(productName, price, blob, restId, catId, productId,userId);
+//        byte[] bytes = file.getBytes();
+//        Blob blob = new SerialBlob(bytes);
+        cartItemDto = custService.addToCart(cartRequest, productId,userId);
         if (cartItemDto == null) {
             return ResponseEntity.badRequest().build();
         }

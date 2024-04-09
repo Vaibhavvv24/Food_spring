@@ -164,10 +164,11 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
-    public CartItemDto addToCart(String productName, int price, Blob blob, Long restId, Long catId, Long productId,Long userId) {
+    public CartItemDto addToCart(CartRequest cartRequest, Long productId,Long userId) {
         CartItem cartItem=new CartItem();
-        Restraunt restraunt=repo.findById(restId).get();
-        Category category=catRepo.findById(catId).get();
+
+        Restraunt restraunt=repo.findById(cartRequest.getRestId()).get();
+        Category category=catRepo.findById(cartRequest.getCatId()).get();
         Product product=productRepo.findById(productId).get();
         cartItem.setRestraunt(restraunt);
         User user=userRepo.findById(userId).get();
@@ -175,7 +176,7 @@ public class CustServiceImpl implements CustService{
         cartItem.setCart(cart);
         cartItem.setProduct(product);
         cartItem.setCategory(category);
-        cart.setTotalPrice(cart.getTotalPrice()+price);
+        cart.setTotalPrice(cart.getTotalPrice()+cartRequest.getPrice());
         cartRepo.save(cart);
         CartItemDto cartItemDto=new CartItemDto();
         CartItem savedCartItem=cartItemRepo.save(cartItem);
