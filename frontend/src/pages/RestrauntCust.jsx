@@ -8,6 +8,10 @@ const RestrauntCust = () => {
 
   const [restCats, setRestCats] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchTermProduct, setSearchTermProduct] = useState("");
+  const [clicked, setClicked] = useState(false);
+  const [searchTermByCat, setSearchTermByCat] = useState("");
+  const [catId, setCatId] = useState("");
 
   const [products, setProducts] = useState([]);
 
@@ -64,11 +68,13 @@ const RestrauntCust = () => {
   if (restCats.length == 0) {
     return (
       <div>
-        <h1>No Restraunt Found</h1>
+        <h1>No Category Found</h1>
       </div>
     );
   }
   const handleFilter = async (catid) => {
+    setClicked(true);
+    setCatId(catid);
     const res = await fetch(
       `http://localhost:8080/api/customer/category/${catid}/products/${id}`,
       {
@@ -81,6 +87,35 @@ const RestrauntCust = () => {
     console.log(data);
     setProducts(data);
     console.log("djjdjd");
+  };
+
+  const handleProductSearch = async (e) => {
+    e.preventDefault();
+    const res = await fetch(
+      `http://localhost:8080/api/customer/products/search/${id}/restraunt/${searchTermProduct}`,
+      {
+        headers: {
+          Authorization: "Bearer " + currentUser.jwt,
+        },
+      }
+    );
+    const data = await res.json();
+    console.log(data);
+    setProducts(data);
+  };
+  const handleProductByCatSearch = async (e) => {
+    e.preventDefault();
+    const res = await fetch(
+      `http://localhost:8080/api/customer/products/search/${id}/restraunt/${catId}/category/${searchTermByCat}`,
+      {
+        headers: {
+          Authorization: "Bearer " + currentUser.jwt,
+        },
+      }
+    );
+    const data = await res.json();
+    console.log(data);
+    setProducts(data);
   };
   return (
     <div>
@@ -106,6 +141,30 @@ const RestrauntCust = () => {
         </div>
       }
       <div>
+        {!clicked && (
+          <form onSubmit={handleProductSearch}>
+            <input
+              type="text"
+              value={searchTermProduct}
+              onChange={(e) => setSearchTermProduct(e.target.value)}
+              placeholder="Enter Product Name"
+            />
+            <button type="submit">Search</button>
+          </form>
+        )}
+        {clicked && (
+          <div>
+            <form onSubmit={handleProductByCatSearch}>
+              <input
+                type="text"
+                value={searchTermByCat}
+                onChange={(e) => setSearchTermByCat(e.target.value)}
+                placeholder="Enter Producty Name"
+              />
+              <button type="submit">Search</button>
+            </form>
+          </div>
+        )}
         {products.map((product) => (
           <div key={product.id}>
             <h1>{product.name}</h1>

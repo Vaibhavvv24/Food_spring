@@ -116,12 +116,13 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(productDtos);
     }
-    @GetMapping("/products/search/{restrauntId}/restraunt/{productName}")
+    @GetMapping("/products/search/{restrauntId}/restraunt/{productName}")  //done
     public ResponseEntity<?> getProductsbyName(@PathVariable String productName,@PathVariable Long restrauntId) {
         List<ProductDto> productDtos = custService.getProductbyNameandRestraunt(productName,restrauntId);
         System.out.println(productDtos.size());
         if (productDtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            ArrayList arrayList=new ArrayList<>();
+            return ResponseEntity.ok().body(arrayList);
         }
         return ResponseEntity.ok().body(productDtos);
 
