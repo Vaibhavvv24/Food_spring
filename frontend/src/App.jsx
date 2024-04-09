@@ -13,6 +13,7 @@ import AddProduct from "./pages/AddProduct";
 import ProductsResOwner from "./pages/ProductsResOwner";
 import Profile from "./pages/Profile";
 import Shop from "./pages/Shop";
+import RestrauntCust from "./pages/RestrauntCust";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/owner/products/:id" element={<ProductsResOwner />} />
           <Route path="/customer/profile/:id" element={<Profile />} />
           <Route path="/customer/shop" element={<Shop />} />
+          <Route path="/shop/restraunt/:id" element={<RestrauntCust />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -15,10 +15,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -32,7 +29,7 @@ public class CustomerCont {
 
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}")            //done
     public ResponseEntity<UserDto> getUser(@PathVariable Long userId){
         UserDto userDto=custService.getUser(userId);
         if(userDto==null){
@@ -40,7 +37,7 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(userDto);
     }
-    @PutMapping("/update/{userId}")
+    @PutMapping("/update/{userId}")   //done
     public ResponseEntity<UserDto> updateUser(@PathVariable Long userId,@RequestBody UserDto userDto){
         UserDto userDto1=custService.updateUser(userDto,userId);
         if(userDto==null){
@@ -49,14 +46,14 @@ public class CustomerCont {
         return ResponseEntity.ok().body(userDto1);
 
     }
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/delete/{userId}")  //done
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         custService.deleteUser(userId);
         Map<String,String> deletemap=new HashMap<>();
         deletemap.put("message","deleted successfully"+userId);
         return ResponseEntity.ok().body(deletemap);
     }
-    @GetMapping("/restraunts")
+    @GetMapping("/restraunts")  //done
     public ResponseEntity<?> getAllRes(){
         List<ResDto> resDtos=custService.getRes();
         if(resDtos.isEmpty()) {
@@ -64,7 +61,7 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(resDtos);
     }
-    @GetMapping("/categories")
+    @GetMapping("/categories")   //done
     public ResponseEntity<?> getAll(){
         List<CategoryDto> categoryDtos=custService.getCats();
         if(categoryDtos.isEmpty()) {
@@ -72,7 +69,7 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(categoryDtos);
     }
-    @GetMapping("/categories/{restId}")
+    @GetMapping("/categories/{restId}")   //done
     public ResponseEntity<?> getByRes(@PathVariable Long restId){
         List<CategoryDto> categoryDtos=custService.getCatbyRes(restId);
         if(categoryDtos.isEmpty()) {
@@ -90,16 +87,17 @@ public class CustomerCont {
         return ResponseEntity.ok().body(categoryDtos);
 
     }
-    @GetMapping("/categories/search/restraunt/{name}")
+    @GetMapping("/categories/search/restraunt/{name}")   //done
     public ResponseEntity<?> getByName(@PathVariable String name){
         List<CategoryDto> categoryDtos=custService.getCatbyName(name);
         if(categoryDtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            ArrayList arrayList=new ArrayList<>();
+            return ResponseEntity.ok().body(arrayList);
         }
         return ResponseEntity.ok().body(categoryDtos);
 
     }
-    @GetMapping("/products/{restId}")
+    @GetMapping("/products/{restId}")   //done
     public ResponseEntity<?> getProducts(@PathVariable Long restId){
         List<ProductDto> productDtos=custService.getProds(restId);
         System.out.println(productDtos.size());
@@ -108,12 +106,13 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(productDtos);
     }
-    @GetMapping("/category/{catId}/products/{restId}")
+    @GetMapping("/category/{catId}/products/{restId}")          //done
     public ResponseEntity<?> getProductsByCat(@PathVariable Long restId,@PathVariable Long catId){
         List<ProductDto> productDtos=custService.getProdByCat(restId,catId);
         System.out.println(productDtos.size());
         if(productDtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            ArrayList arrayList=new ArrayList<>();
+            return ResponseEntity.ok().body(arrayList);
         }
         return ResponseEntity.ok().body(productDtos);
     }

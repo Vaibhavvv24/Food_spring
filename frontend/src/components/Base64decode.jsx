@@ -32,7 +32,7 @@ const Base64decode = ({ base64String }) => {
         <img
           src={imageUrl}
           alt="Decoded Image"
-          className="w-[300px] h-[300px]"
+          className="w-[200px] h-[200px]"
         />
       )}
     </div>

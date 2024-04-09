@@ -56,7 +56,7 @@ const Shop = () => {
         {restraunts.map((restraunt) => (
           <div
             key={restraunt.id}
-            onClick={() => navigate(`/shop/${restraunt.id}`)}
+            onClick={() => navigate(`/shop/restraunt/${restraunt.id}`)}
           >
             {restraunt.name}
             <Base64decode base64String={restraunt.img} />
