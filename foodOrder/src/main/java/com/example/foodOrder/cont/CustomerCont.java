@@ -49,13 +49,15 @@ public class CustomerCont {
         if(userDto==null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(userDto);
+        return ResponseEntity.ok().body(userDto1);
 
     }
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         custService.deleteUser(userId);
-        return ResponseEntity.ok().body("User deleted Successfully");
+        Map<String,String> deletemap=new HashMap<>();
+        deletemap.put("message","deleted successfully"+userId);
+        return ResponseEntity.ok().body(deletemap);
     }
     @GetMapping("/categories")
     public ResponseEntity<?> getAll(){

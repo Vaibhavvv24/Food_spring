@@ -32,7 +32,7 @@ const Login = () => {
       window.location.reload();
     }
     if (data.role === "CUSTOMER") {
-      navigate("/");
+      navigate(`/customer/profile/${data.id}`);
       window.location.reload();
     }
     if (data.role === "OWNER") {

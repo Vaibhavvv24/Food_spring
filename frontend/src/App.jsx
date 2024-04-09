@@ -11,6 +11,7 @@ import OwnerCategories from "./pages/OwnerCategories";
 import AddProduct from "./pages/AddProduct";
 
 import ProductsResOwner from "./pages/ProductsResOwner";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           />
           <Route path="/owner/:catid/product/:id" element={<AddProduct />} />
           <Route path="/owner/products/:id" element={<ProductsResOwner />} />
+          <Route path="/customer/profile/:id" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </div>

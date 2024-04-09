@@ -82,6 +82,7 @@ public class CustServiceImpl implements CustService{
     @Transactional
     public UserDto updateUser(UserDto userDto, Long userId) {
         User user=userRepo.findById(userId).get();
+        System.out.println(user);
         if(userId!=user.getId()){
             System.out.println("not matching");
             return null;
