@@ -97,6 +97,15 @@ public class CustomerCont {
         return ResponseEntity.ok().body(categoryDtos);
 
     }
+    @GetMapping("/products/{productId}")
+    public ResponseEntity<?> getProductById(@PathVariable Long productId){
+        ProductDto productDto=custService.getProductbyId(productId);
+        System.out.println(productDto);
+        if(productDto==null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDto);
+    }
     @GetMapping("/products/{restId}")   //done
     public ResponseEntity<?> getProducts(@PathVariable Long restId){
         List<ProductDto> productDtos=custService.getProds(restId);
@@ -127,7 +136,7 @@ public class CustomerCont {
         return ResponseEntity.ok().body(productDtos);
 
     }
-    @GetMapping("/products/search/{restrauntId}/restraunt/{catId}/category/{productName}")
+    @GetMapping("/products/search/{restrauntId}/restraunt/{catId}/category/{productName}")      //done
     public ResponseEntity<?> getProductsbyNameandCat(@PathVariable String productName,@PathVariable Long restrauntId,@PathVariable Long catId) {
         List<ProductDto> productDtos = custService.getProductbyNameandRestrauntandCat(productName,restrauntId,catId);
         System.out.println(productDtos.size());

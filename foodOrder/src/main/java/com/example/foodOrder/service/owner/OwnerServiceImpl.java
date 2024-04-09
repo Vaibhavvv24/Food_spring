@@ -111,23 +111,7 @@ public class OwnerServiceImpl implements OwnerService{
         return productRepo.findAllByRestrauntId(restId).stream().map(Product::getProductDto).collect(Collectors.toList());
     }
 
-    @Override
-    public ProductDto getProductbyId(Long productId) {
-        Product product=productRepo.findById(productId).get();
-        ProductDto productDto=new ProductDto();
-        productDto.setPrice(product.getPrice());
-        productDto.setId(product.getId());
 
-        productDto.setRestrauntId(product.getRestraunt().getId());
-        productDto.setRestrauntName(product.getRestraunt().getName());
-        productDto.setCategoryid(product.getCategory().getId());
-        productDto.setCategoryname(product.getCategory().getName());
-        productDto.setName(product.getProductName());
-        Blob blob= product.getImg();
-        String base64=blobToBase64(blob);
-        productDto.setReturnedimg(base64);
-        return productDto;
-    }
 
     @Override
     public void deleteByProductId(Long prodId, Long restId) {

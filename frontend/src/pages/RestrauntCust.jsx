@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Base64decode from "../components/Base64decode";
 
 const RestrauntCust = () => {
@@ -14,6 +14,7 @@ const RestrauntCust = () => {
   const [catId, setCatId] = useState("");
 
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   async function fetchRestCats() {
     const res = await fetch(
@@ -117,6 +118,7 @@ const RestrauntCust = () => {
     console.log(data);
     setProducts(data);
   };
+
   return (
     <div>
       <h1>Restraunt</h1>
@@ -170,6 +172,9 @@ const RestrauntCust = () => {
             <h1>{product.name}</h1>
             <h2>{product.price}</h2>
             <Base64decode base64String={product.returnedimg} />
+            <button onClick={() => navigate(`/product/${product.id}`)}>
+              View Product
+            </button>
           </div>
         ))}
       </div>

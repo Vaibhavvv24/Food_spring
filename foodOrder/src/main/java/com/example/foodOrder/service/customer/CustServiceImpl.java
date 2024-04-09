@@ -145,6 +145,23 @@ public class CustServiceImpl implements CustService{
     public List<ProductDto> getProductbyNameandRestrauntandCat(String productName, Long restrauntId, Long catId) {
         return productRepo.findAllByRestrauntIdAndCategoryIdAndProductNameContaining(restrauntId,catId,productName).stream().map(Product::getProductDto).collect(Collectors.toList());
     }
+    @Override
+    public ProductDto getProductbyId(Long productId) {
+        Product product=productRepo.findById(productId).get();
+        ProductDto productDto=new ProductDto();
+        productDto.setPrice(product.getPrice());
+        productDto.setId(product.getId());
+
+        productDto.setRestrauntId(product.getRestraunt().getId());
+        productDto.setRestrauntName(product.getRestraunt().getName());
+        productDto.setCategoryid(product.getCategory().getId());
+        productDto.setCategoryname(product.getCategory().getName());
+        productDto.setName(product.getProductName());
+        Blob blob= product.getImg();
+        String base64=blobToBase64(blob);
+        productDto.setReturnedimg(base64);
+        return productDto;
+    }
 
     @Override
     public CartItemDto addToCart(String productName, int price, Blob blob, Long restId, Long catId, Long productId,Long userId) {

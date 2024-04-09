@@ -37,4 +37,6 @@ public interface CustService {
     void clearCart(Long userId);
 
     List<ResDto> getRes();
+
+    ProductDto getProductbyId(Long id);
 }

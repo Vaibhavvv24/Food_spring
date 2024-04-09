@@ -87,15 +87,6 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(productDtos);
     }
-    @GetMapping("/products/{productId}")
-    public ResponseEntity<?> getProductById(@PathVariable Long productId){
-    ProductDto productDto=ownerService.getProductbyId(productId);
-        System.out.println(productDto);
-        if(productDto==null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(productDto);
-    }
     @DeleteMapping("{restId}/products/delete/{prodId}")
     public ResponseEntity<?> deleteByProdId(@PathVariable Long prodId,@PathVariable Long restId){
         ownerService.deleteByProductId(prodId,restId);
