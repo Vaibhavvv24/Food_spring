@@ -12,6 +12,7 @@ import AddProduct from "./pages/AddProduct";
 
 import ProductsResOwner from "./pages/ProductsResOwner";
 import Profile from "./pages/Profile";
+import Shop from "./pages/Shop";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/owner/:catid/product/:id" element={<AddProduct />} />
           <Route path="/owner/products/:id" element={<ProductsResOwner />} />
           <Route path="/customer/profile/:id" element={<Profile />} />
+          <Route path="/customer/shop" element={<Shop />} />
         </Routes>
       </BrowserRouter>
     </div>

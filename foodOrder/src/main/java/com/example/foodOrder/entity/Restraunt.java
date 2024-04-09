@@ -1,15 +1,36 @@
 package com.example.foodOrder.entity;
 
+import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.ResDto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.Blob;
+import java.util.Base64;
 import java.util.List;
 
 @Entity
 @Table(name="restraunt")
 public class Restraunt {
+
+    public static String blobToBase64(Blob blob) {
+        try (InputStream inputStream = blob.getBinaryStream()) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -75,5 +96,18 @@ public class Restraunt {
 
     public void setImg(Blob img) {
         this.img = img;
+    }
+
+    public ResDto getResDto() {
+        ResDto resDto=new ResDto();
+        resDto.setName(name);
+        resDto.setAddress(address);
+        Blob blob=img;
+        String base64=blobToBase64(blob);
+        resDto.setImg(base64);
+        resDto.setOwnerId(owner.getId());
+        resDto.setId(id);
+        resDto.setOwnerName(owner.getName());
+        return resDto;
     }
 }

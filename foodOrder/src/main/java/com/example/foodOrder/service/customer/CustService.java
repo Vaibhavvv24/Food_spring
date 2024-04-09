@@ -1,9 +1,6 @@
 package com.example.foodOrder.service.customer;
 
-import com.example.foodOrder.dto.CartItemDto;
-import com.example.foodOrder.dto.CategoryDto;
-import com.example.foodOrder.dto.ProductDto;
-import com.example.foodOrder.dto.UserDto;
+import com.example.foodOrder.dto.*;
 
 import java.sql.Blob;
 import java.util.List;
@@ -38,4 +35,6 @@ public interface CustService {
     void updateCart(Long userId, Long cartItemId);
 
     void clearCart(Long userId);
+
+    List<ResDto> getRes();
 }

@@ -1,9 +1,6 @@
 package com.example.foodOrder.service.customer;
 
-import com.example.foodOrder.dto.CartItemDto;
-import com.example.foodOrder.dto.CategoryDto;
-import com.example.foodOrder.dto.ProductDto;
-import com.example.foodOrder.dto.UserDto;
+import com.example.foodOrder.dto.*;
 import com.example.foodOrder.entity.*;
 import com.example.foodOrder.repo.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -107,6 +104,10 @@ public class CustServiceImpl implements CustService{
     @Override
     public List<CategoryDto> getCats() {
         return catRepo.findAll().stream().map(Category::getCatDto).collect(Collectors.toList());
+    }
+    @Override
+    public List<ResDto> getRes() {
+        return repo.findAll().stream().map(Restraunt::getResDto).collect(Collectors.toList());
     }
 
     @Override

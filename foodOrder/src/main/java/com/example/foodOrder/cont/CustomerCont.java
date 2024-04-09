@@ -1,9 +1,6 @@
 package com.example.foodOrder.cont;
 
-import com.example.foodOrder.dto.CartItemDto;
-import com.example.foodOrder.dto.CategoryDto;
-import com.example.foodOrder.dto.ProductDto;
-import com.example.foodOrder.dto.UserDto;
+import com.example.foodOrder.dto.*;
 import com.example.foodOrder.entity.Cart;
 import com.example.foodOrder.entity.User;
 import com.example.foodOrder.repo.CartRepo;
@@ -58,6 +55,14 @@ public class CustomerCont {
         Map<String,String> deletemap=new HashMap<>();
         deletemap.put("message","deleted successfully"+userId);
         return ResponseEntity.ok().body(deletemap);
+    }
+    @GetMapping("/restraunts")
+    public ResponseEntity<?> getAllRes(){
+        List<ResDto> resDtos=custService.getRes();
+        if(resDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(resDtos);
     }
     @GetMapping("/categories")
     public ResponseEntity<?> getAll(){
