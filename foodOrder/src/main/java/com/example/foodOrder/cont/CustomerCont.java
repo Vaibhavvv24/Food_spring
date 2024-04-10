@@ -1,9 +1,6 @@
 package com.example.foodOrder.cont;
 
-import com.example.foodOrder.dto.CartItemDto;
-import com.example.foodOrder.dto.CategoryDto;
-import com.example.foodOrder.dto.ProductDto;
-import com.example.foodOrder.dto.UserDto;
+import com.example.foodOrder.dto.*;
 import com.example.foodOrder.entity.Cart;
 import com.example.foodOrder.entity.User;
 import com.example.foodOrder.repo.CartRepo;
@@ -18,10 +15,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -35,7 +29,7 @@ public class CustomerCont {
 
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}")            //done
     public ResponseEntity<UserDto> getUser(@PathVariable Long userId){
         UserDto userDto=custService.getUser(userId);
         if(userDto==null){
@@ -43,21 +37,31 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(userDto);
     }
-    @PutMapping("/update/{userId}")
+    @PutMapping("/update/{userId}")   //done
     public ResponseEntity<UserDto> updateUser(@PathVariable Long userId,@RequestBody UserDto userDto){
         UserDto userDto1=custService.updateUser(userDto,userId);
         if(userDto==null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(userDto);
+        return ResponseEntity.ok().body(userDto1);
 
     }
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/delete/{userId}")  //done
     public ResponseEntity<?> deleteUser(@PathVariable Long userId){
         custService.deleteUser(userId);
-        return ResponseEntity.ok().body("User deleted Successfully");
+        Map<String,String> deletemap=new HashMap<>();
+        deletemap.put("message","deleted successfully"+userId);
+        return ResponseEntity.ok().body(deletemap);
     }
-    @GetMapping("/categories")
+    @GetMapping("/restraunts")  //done
+    public ResponseEntity<?> getAllRes(){
+        List<ResDto> resDtos=custService.getRes();
+        if(resDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(resDtos);
+    }
+    @GetMapping("/categories")   //done
     public ResponseEntity<?> getAll(){
         List<CategoryDto> categoryDtos=custService.getCats();
         if(categoryDtos.isEmpty()) {
@@ -65,7 +69,7 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(categoryDtos);
     }
-    @GetMapping("/categories/{restId}")
+    @GetMapping("/categories/{restId}")   //done
     public ResponseEntity<?> getByRes(@PathVariable Long restId){
         List<CategoryDto> categoryDtos=custService.getCatbyRes(restId);
         if(categoryDtos.isEmpty()) {
@@ -83,16 +87,26 @@ public class CustomerCont {
         return ResponseEntity.ok().body(categoryDtos);
 
     }
-    @GetMapping("/categories/search/restraunt/{name}")
+    @GetMapping("/categories/search/restraunt/{name}")   //done
     public ResponseEntity<?> getByName(@PathVariable String name){
         List<CategoryDto> categoryDtos=custService.getCatbyName(name);
         if(categoryDtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            ArrayList arrayList=new ArrayList<>();
+            return ResponseEntity.ok().body(arrayList);
         }
         return ResponseEntity.ok().body(categoryDtos);
 
     }
-    @GetMapping("/products/{restId}")
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<?> getProductById(@PathVariable Long productId){
+        ProductDto productDto=custService.getProductbyId(productId);
+        System.out.println(productDto);
+        if(productDto==null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDto);
+    }
+    @GetMapping("/products/{restId}")   //done
     public ResponseEntity<?> getProducts(@PathVariable Long restId){
         List<ProductDto> productDtos=custService.getProds(restId);
         System.out.println(productDtos.size());
@@ -101,26 +115,28 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(productDtos);
     }
-    @GetMapping("/category/{catId}/products/{restId}")
+    @GetMapping("/category/{catId}/products/{restId}")          //done
     public ResponseEntity<?> getProductsByCat(@PathVariable Long restId,@PathVariable Long catId){
         List<ProductDto> productDtos=custService.getProdByCat(restId,catId);
         System.out.println(productDtos.size());
         if(productDtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            ArrayList arrayList=new ArrayList<>();
+            return ResponseEntity.ok().body(arrayList);
         }
         return ResponseEntity.ok().body(productDtos);
     }
-    @GetMapping("/products/search/{restrauntId}/restraunt/{productName}")
+    @GetMapping("/products/search/{restrauntId}/restraunt/{productName}")  //done
     public ResponseEntity<?> getProductsbyName(@PathVariable String productName,@PathVariable Long restrauntId) {
         List<ProductDto> productDtos = custService.getProductbyNameandRestraunt(productName,restrauntId);
         System.out.println(productDtos.size());
         if (productDtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            ArrayList arrayList=new ArrayList<>();
+            return ResponseEntity.ok().body(arrayList);
         }
         return ResponseEntity.ok().body(productDtos);
 
     }
-    @GetMapping("/products/search/{restrauntId}/restraunt/{catId}/category/{productName}")
+    @GetMapping("/products/search/{restrauntId}/restraunt/{catId}/category/{productName}")      //done
     public ResponseEntity<?> getProductsbyNameandCat(@PathVariable String productName,@PathVariable Long restrauntId,@PathVariable Long catId) {
         List<ProductDto> productDtos = custService.getProductbyNameandRestrauntandCat(productName,restrauntId,catId);
         System.out.println(productDtos.size());
@@ -134,12 +150,12 @@ public class CustomerCont {
     //cart operations
 
     @PostMapping("/products/{userId}/add/{productId}")
-    public ResponseEntity<?> addToCart(@RequestParam("productName") String productName, @RequestParam("img") MultipartFile file, @RequestParam("price") int price, @RequestParam("restId") Long restId,@RequestParam("catId") Long catId ,@PathVariable Long productId,@PathVariable Long userId) throws IOException, SQLException {
-
+    public ResponseEntity<?> addToCart(@RequestBody CartRequest cartRequest,@PathVariable Long userId,@PathVariable Long productId) throws IOException, SQLException {
+        System.out.println(productId);
         CartItemDto cartItemDto;
-        byte[] bytes = file.getBytes();
-        Blob blob = new SerialBlob(bytes);
-        cartItemDto = custService.addToCart(productName, price, blob, restId, catId, productId,userId);
+//        byte[] bytes = file.getBytes();
+//        Blob blob = new SerialBlob(bytes);
+        cartItemDto = custService.addToCart(cartRequest, productId,userId);
         if (cartItemDto == null) {
             return ResponseEntity.badRequest().build();
         }

@@ -1,9 +1,6 @@
 package com.example.foodOrder.service.customer;
 
-import com.example.foodOrder.dto.CartItemDto;
-import com.example.foodOrder.dto.CategoryDto;
-import com.example.foodOrder.dto.ProductDto;
-import com.example.foodOrder.dto.UserDto;
+import com.example.foodOrder.dto.*;
 import com.example.foodOrder.entity.*;
 import com.example.foodOrder.repo.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -82,6 +79,7 @@ public class CustServiceImpl implements CustService{
     @Transactional
     public UserDto updateUser(UserDto userDto, Long userId) {
         User user=userRepo.findById(userId).get();
+        System.out.println(user);
         if(userId!=user.getId()){
             System.out.println("not matching");
             return null;
@@ -106,6 +104,10 @@ public class CustServiceImpl implements CustService{
     @Override
     public List<CategoryDto> getCats() {
         return catRepo.findAll().stream().map(Category::getCatDto).collect(Collectors.toList());
+    }
+    @Override
+    public List<ResDto> getRes() {
+        return repo.findAll().stream().map(Restraunt::getResDto).collect(Collectors.toList());
     }
 
     @Override
@@ -143,12 +145,30 @@ public class CustServiceImpl implements CustService{
     public List<ProductDto> getProductbyNameandRestrauntandCat(String productName, Long restrauntId, Long catId) {
         return productRepo.findAllByRestrauntIdAndCategoryIdAndProductNameContaining(restrauntId,catId,productName).stream().map(Product::getProductDto).collect(Collectors.toList());
     }
+    @Override
+    public ProductDto getProductbyId(Long productId) {
+        Product product=productRepo.findById(productId).get();
+        ProductDto productDto=new ProductDto();
+        productDto.setPrice(product.getPrice());
+        productDto.setId(product.getId());
+
+        productDto.setRestrauntId(product.getRestraunt().getId());
+        productDto.setRestrauntName(product.getRestraunt().getName());
+        productDto.setCategoryid(product.getCategory().getId());
+        productDto.setCategoryname(product.getCategory().getName());
+        productDto.setName(product.getProductName());
+        Blob blob= product.getImg();
+        String base64=blobToBase64(blob);
+        productDto.setReturnedimg(base64);
+        return productDto;
+    }
 
     @Override
-    public CartItemDto addToCart(String productName, int price, Blob blob, Long restId, Long catId, Long productId,Long userId) {
+    public CartItemDto addToCart(CartRequest cartRequest, Long productId,Long userId) {
         CartItem cartItem=new CartItem();
-        Restraunt restraunt=repo.findById(restId).get();
-        Category category=catRepo.findById(catId).get();
+
+        Restraunt restraunt=repo.findById(cartRequest.getRestId()).get();
+        Category category=catRepo.findById(cartRequest.getCatId()).get();
         Product product=productRepo.findById(productId).get();
         cartItem.setRestraunt(restraunt);
         User user=userRepo.findById(userId).get();
@@ -156,7 +176,7 @@ public class CustServiceImpl implements CustService{
         cartItem.setCart(cart);
         cartItem.setProduct(product);
         cartItem.setCategory(category);
-        cart.setTotalPrice(cart.getTotalPrice()+price);
+        cart.setTotalPrice(cart.getTotalPrice()+cartRequest.getPrice());
         cartRepo.save(cart);
         CartItemDto cartItemDto=new CartItemDto();
         CartItem savedCartItem=cartItemRepo.save(cartItem);

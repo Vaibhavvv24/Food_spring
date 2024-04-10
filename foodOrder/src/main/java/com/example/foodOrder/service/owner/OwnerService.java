@@ -16,9 +16,9 @@ public interface OwnerService {
 
     ProductDto createProd(String productName, int price, Blob blob, Long restId, Long catId);
 
-    List<ProductDto> getProducts();
+    List<ProductDto> getProducts(Long restId);
 
-    ProductDto getProductbyId(Long productId);
+//    ProductDto getProductbyId(Long productId);
 
     void deleteByProductId(Long prodId, Long restId);
 

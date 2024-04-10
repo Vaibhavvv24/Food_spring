@@ -26,7 +26,17 @@ const Base64decode = ({ base64String }) => {
       }
     };
   }, [base64String]);
-  return <div>{imageUrl && <img src={imageUrl} alt="Decoded Image" />}</div>;
+  return (
+    <div>
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt="Decoded Image"
+          className="w-[200px] h-[200px]"
+        />
+      )}
+    </div>
+  );
 };
 
 export default Base64decode;

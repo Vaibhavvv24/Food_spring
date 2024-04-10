@@ -78,28 +78,21 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(productDto);
     }
-    @GetMapping("/products")
-    public ResponseEntity<?> getProducts(){
-        List<ProductDto> productDtos=ownerService.getProducts();
+    @GetMapping("/productsGet/{restId}")
+    public ResponseEntity<?> getProducts(@PathVariable Long restId){
+        List<ProductDto> productDtos=ownerService.getProducts(restId);
         System.out.println(productDtos.size());
         if(productDtos.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(productDtos);
     }
-    @GetMapping("/products/{productId}")
-    public ResponseEntity<?> getProductById(@PathVariable Long productId){
-    ProductDto productDto=ownerService.getProductbyId(productId);
-        System.out.println(productDto);
-        if(productDto==null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(productDto);
-    }
     @DeleteMapping("{restId}/products/delete/{prodId}")
     public ResponseEntity<?> deleteByProdId(@PathVariable Long prodId,@PathVariable Long restId){
         ownerService.deleteByProductId(prodId,restId);
-        return ResponseEntity.ok().body("deleted product");
+        Map<String,String> deletemap=new HashMap<>();
+        deletemap.put("message","deleted successfully"+restId);
+        return ResponseEntity.ok().body(deletemap);
 
     }
 
