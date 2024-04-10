@@ -12,6 +12,8 @@ const Navbar = () => {
     window.location.href = "/login";
   };
 
+//   Ignore this comment.
+
   return (
     <nav className="bg-blue-200">
       <div className="flex ">
