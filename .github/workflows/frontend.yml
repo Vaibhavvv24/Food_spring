@@ -1,4 +1,4 @@
-name: CICD for NP Tracker Frontend
+name: CICD for Food Project Frontend
 
 on:
   push:
