@@ -13,8 +13,9 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name="product_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Product product;
 
 
@@ -24,6 +25,11 @@ public class CartItem {
     @JsonIgnore
     private Cart cart;
 
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "User_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private User user;
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "category_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -38,6 +44,14 @@ public class CartItem {
 
     public CartItem(){
 
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Restraunt getRestraunt() {

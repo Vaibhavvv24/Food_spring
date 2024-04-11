@@ -176,6 +176,7 @@ public class CustServiceImpl implements CustService{
         cartItem.setCart(cart);
         cartItem.setProduct(product);
         cartItem.setCategory(category);
+        cartItem.setUser(user);
         cart.setTotalPrice(cart.getTotalPrice()+cartRequest.getPrice());
         cartRepo.save(cart);
         CartItemDto cartItemDto=new CartItemDto();
