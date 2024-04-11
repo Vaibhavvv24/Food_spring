@@ -12,7 +12,7 @@ const Navbar = () => {
     window.location.href = "/login";
   };
 
-//   Ignore this comment.
+  //   Ignore this comment.
 
   return (
     <nav className="bg-blue-200">
@@ -63,7 +63,10 @@ const Navbar = () => {
               {/* Reservation
               </button> */}
               {/* <Link to="/customer/reservations">Reservations</Link> */}
-              <Link to="/cart">Cart</Link>
+              {/* <Link to="/cart">Cart</Link> */}
+              <button onClick={() => navigate(`/cart/${currentUser.id}`)}>
+                Cart
+              </button>
             </li>
           )}
           {currentUser && (

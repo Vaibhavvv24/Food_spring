@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import Shop from "./pages/Shop";
 import RestrauntCust from "./pages/RestrauntCust";
 import ProductIndividual from "./pages/ProductIndividual";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path="/customer/shop" element={<Shop />} />
           <Route path="/shop/restraunt/:id" element={<RestrauntCust />} />
           <Route path="/product/:id" element={<ProductIndividual />} />
+          <Route path="/cart/:id" element={<Cart />} />
         </Routes>
       </BrowserRouter>
     </div>

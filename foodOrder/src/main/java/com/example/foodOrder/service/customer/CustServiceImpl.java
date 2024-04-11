@@ -198,6 +198,7 @@ public class CustServiceImpl implements CustService{
             cartItemDto.setProductId(cartItem.getProduct().getId());
             Blob blob=cartItem.getProduct().getImg();
             String base64=blobToBase64(blob);
+            cartItemDto.setProductName(cartItem.getProduct().getProductName());
 
             cartItemDto.setProductImg(base64);
             cartItemDto.setRestId(cartItem.getRestraunt().getId());
