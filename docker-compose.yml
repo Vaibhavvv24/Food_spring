@@ -24,6 +24,17 @@ services:
     networks:
       - foodorder-network
 
+  restaurant-frontend:
+    container_name: frontend_container
+    image: valmikdocker/vaibhav_food_project:frontend
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - foodorder-network
+    env_file:
+      - ./frontend/.env
+
 
 volumes:
   db-data:

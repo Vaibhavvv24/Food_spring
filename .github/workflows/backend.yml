@@ -1,4 +1,4 @@
-name: CICD for Vaibhav's backend
+name: CICD for Food Project Frontend
 on:
   push:
     branches: [master]
