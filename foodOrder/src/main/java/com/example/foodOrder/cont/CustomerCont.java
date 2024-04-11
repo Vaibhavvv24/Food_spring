@@ -161,7 +161,7 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(cartItemDto);
     }
-    @GetMapping("/cart/{userId}")
+    @GetMapping("/cart/{userId}")   //done
     public ResponseEntity<?> getCart(@PathVariable Long userId){
         List<CartItemDto> cartItemDtoList=custService.getCart(userId);
         if(cartItemDtoList.isEmpty()){
@@ -171,14 +171,14 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(cartItemDtoList);
     }
-    @PutMapping("/cart/{userId}/update/{cartItemId}")
+    @PutMapping("/cart/{userId}/update/{cartItemId}")  //done
     public ResponseEntity<?> updateCart(@PathVariable Long userId,@PathVariable Long cartItemId){
         custService.updateCart(userId,cartItemId);
         Map<String,String> msg=new HashMap<>();
         msg.put("Message","Your cart is empty");
         return ResponseEntity.ok().body(msg);
     }
-    @DeleteMapping("/cart/{userId}/delete")
+    @DeleteMapping("/cart/{userId}/delete")   //done
     public ResponseEntity<?> deleteCart(@PathVariable Long userId){
         custService.clearCart(userId);
         Map<String,String> msg=new HashMap<>();
