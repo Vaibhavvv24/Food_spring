@@ -6,7 +6,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
-
+// Ignore this comment.
 // Configuration class
 
 @Configuration
