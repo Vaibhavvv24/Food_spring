@@ -174,7 +174,9 @@ public class CustomerCont {
     @PutMapping("/cart/{userId}/update/{cartItemId}")
     public ResponseEntity<?> updateCart(@PathVariable Long userId,@PathVariable Long cartItemId){
         custService.updateCart(userId,cartItemId);
-        return ResponseEntity.ok().body("Updated cart");
+        Map<String,String> msg=new HashMap<>();
+        msg.put("Message","Your cart is empty");
+        return ResponseEntity.ok().body(msg);
     }
     @DeleteMapping("/cart/{userId}/delete")
     public ResponseEntity<?> deleteCart(@PathVariable Long userId){

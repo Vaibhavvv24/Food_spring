@@ -18,6 +18,8 @@ public class CartItemDto {
 
     private Long productId;
 
+    private String productName;
+
     private String productImg;
 
     private int productPrice;
@@ -27,6 +29,14 @@ public class CartItemDto {
     private String restrauntName;
 
     private Long restId;
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
     public CartItemDto(){
 
