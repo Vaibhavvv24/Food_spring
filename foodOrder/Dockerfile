@@ -9,7 +9,8 @@ RUN mvn dependency:go-offline
 
 COPY src ./src
 
-RUN mvn clean install -DskipTests
+
+RUN mvn clean install -DskipTests package
 
 # Stage 2: Build the docker image.
 FROM openjdk:17-jdk-alpine AS production-stage
