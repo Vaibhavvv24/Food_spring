@@ -175,15 +175,13 @@ public class CustServiceImpl implements CustService{
         Cart cart=cartRepo.findByCustomer(user);
         Order order=orderRepo.findByUser(user);
         Restraunt restraunt=repo.findById(restrauntId).get();
-        OrderItem orderItem=orderItemRepo.findByUser(user);
+        OrderItem orderItem=new OrderItem();
         orderItem.setCart(cart);
         orderItem.setRestraunt(restraunt);
         orderItem.setOrderStatus(OrderStatus.PENDING);
         orderItem.setUser(user);
         orderItem.setOrderedAt(new Date(System.currentTimeMillis()));
         orderItem.setOrder(order);
-        List<CartItem> cartItems=cartItemRepo.findAllByCart(cart);
-        orderItem.setCartItemList(cartItems);
         OrderItem savedOne=orderItemRepo.save(orderItem);
         OrderItemDto orderItemDto=new OrderItemDto();
         orderItemDto.setId(savedOne.getId());
@@ -194,15 +192,12 @@ public class CustServiceImpl implements CustService{
     @Override
     public CartItemDto addToCart(CartRequest cartRequest, Long productId,Long userId) {
         CartItem cartItem=new CartItem();
-
-
         Restraunt restraunt=repo.findById(cartRequest.getRestId()).get();
         Category category=catRepo.findById(cartRequest.getCatId()).get();
         Product product=productRepo.findById(productId).get();
         cartItem.setRestraunt(restraunt);
         User user=userRepo.findById(userId).get();
         Cart cart=cartRepo.findByCustomer(user);
-        Order order=orderRepo.findByUser(user);
         cartItem.setCart(cart);
         cartItem.setProduct(product);
         cartItem.setCategory(category);

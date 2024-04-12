@@ -18,6 +18,8 @@ public class Cart {
     @JsonIgnore
     private User customer;
 
+
+
     private int totalPrice;
 
     public Cart(){

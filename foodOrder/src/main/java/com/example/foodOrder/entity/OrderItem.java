@@ -28,9 +28,6 @@ public class OrderItem {
     @JsonIgnore
     private Cart cart;
 
-    @OneToMany(mappedBy = "orderItem")
-    private List<CartItem> cartItemList;
-
     @ManyToOne(fetch = FetchType.LAZY,optional= true)
     @JoinColumn(name = "restraunt_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -93,15 +90,6 @@ public class OrderItem {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
-
-    public List<CartItem> getCartItemList() {
-        return cartItemList;
-    }
-
-    public void setCartItemList(List<CartItem> cartItemList) {
-        this.cartItemList = cartItemList;
-    }
-
     public Restraunt getRestraunt() {
         return restraunt;
     }
