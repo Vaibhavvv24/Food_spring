@@ -39,4 +39,6 @@ public interface CustService {
     List<ResDto> getRes();
 
     ProductDto getProductbyId(Long id);
+
+    OrderItemDto addOrder(Long userId, Long restrauntId, Long cartId);
 }

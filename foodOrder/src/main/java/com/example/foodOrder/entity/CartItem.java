@@ -43,11 +43,18 @@ public class CartItem {
     private Restraunt restraunt;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name="order_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="order_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private OrderItem orderItem;
 
+    public OrderItem getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(OrderItem orderItem) {
+        this.orderItem = orderItem;
+    }
 
     public CartItem(){
 

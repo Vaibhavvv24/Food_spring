@@ -186,5 +186,15 @@ public class CustomerCont {
         return ResponseEntity.ok().body(msg);
     }
 
+    //order of cust
+    @PostMapping("/order/{userId}/restraunt/{restrauntId}/cart/{cartId}")
+    public ResponseEntity<?> postOrder(@PathVariable Long userId,@PathVariable Long restrauntId,@PathVariable Long cartId){
+       OrderItemDto orderItemDto;
+        orderItemDto = custService.addOrder(userId,restrauntId,cartId);
+        if (orderItemDto == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(orderItemDto);
+    }
 
 }
