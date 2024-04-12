@@ -196,5 +196,15 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(orderItemDto);
     }
+    @GetMapping("/order/{userId}")
+    public ResponseEntity<?> getOrders(@PathVariable Long userId){
+        List<OrderItemDto> orderItemDtos=custService.getOrders(userId);
+        if(orderItemDtos.isEmpty()){
+            Map<String,String> map=new HashMap<>();
+            map.put("message","Your past orders are none");
+            return ResponseEntity.badRequest().body(map);
+        }
+        return ResponseEntity.ok().body(orderItemDtos);
+    }
 
 }
