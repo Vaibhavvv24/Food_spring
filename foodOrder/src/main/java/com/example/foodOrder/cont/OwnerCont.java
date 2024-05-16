@@ -1,9 +1,6 @@
 package com.example.foodOrder.cont;
 
-import com.example.foodOrder.dto.CategoryDto;
-import com.example.foodOrder.dto.OrderItemDto;
-import com.example.foodOrder.dto.ProductDto;
-import com.example.foodOrder.dto.ResDto;
+import com.example.foodOrder.dto.*;
 import com.example.foodOrder.service.owner.OwnerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -109,7 +106,13 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(orderItemDtos);
     }
-    @PutMapping("/orders/{restId}/ownerId/{ownerId}/status")
+    @PutMapping("/orders/{restId}/ownerId/{ownerId}")
+    public ResponseEntity<?> updateStatus(@PathVariable Long restId, @PathVariable Long ownerId, @RequestBody StatusReq statusReq){
+        ownerService.updateStatus(restId,ownerId,statusReq);
+        Map<String,String> deletemap=new HashMap<>();
+        deletemap.put("message","updated successfully");
+       return  ResponseEntity.ok().body(deletemap);
+    }
 
 
 

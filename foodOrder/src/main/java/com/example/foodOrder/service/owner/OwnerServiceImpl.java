@@ -3,7 +3,9 @@ package com.example.foodOrder.service.owner;
 import com.example.foodOrder.dto.CategoryDto;
 import com.example.foodOrder.dto.OrderItemDto;
 import com.example.foodOrder.dto.ProductDto;
+import com.example.foodOrder.dto.StatusReq;
 import com.example.foodOrder.entity.*;
+import com.example.foodOrder.enums.OrderStatus;
 import com.example.foodOrder.repo.*;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -155,6 +157,28 @@ public class OwnerServiceImpl implements OwnerService{
             orderItemDtos.add(orderItemDto);
         }
         return orderItemDtos;
+
+    }
+
+    @Override
+    public void updateStatus(Long restId, Long ownerId, StatusReq statusReq) {
+        Restraunt restraunt=repo.findById(restId).get();
+        User user=userRepo.findById(ownerId).get();
+        OrderItem orderItem=orderItemRepo.findById(statusReq.getOrderItemId()).get();
+        if(orderItem.getRestraunt().getId()!=restraunt.getId()){
+            return;
+        }
+        
+        if(statusReq.getStatus().equals("accepted")){
+            orderItem.setOrderStatus(OrderStatus.ACCEPTED);
+        }
+        if(statusReq.getStatus().equals("completed")){
+            orderItem.setOrderStatus(OrderStatus.COMPLETED);
+        }
+        if(statusReq.getStatus().equals("rejected")){
+            orderItem.setOrderStatus(OrderStatus.REJECTED);
+        }
+
 
     }
 }
