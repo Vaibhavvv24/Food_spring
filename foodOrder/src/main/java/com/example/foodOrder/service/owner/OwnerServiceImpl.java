@@ -168,9 +168,10 @@ public class OwnerServiceImpl implements OwnerService{
         if(orderItem.getRestraunt().getId()!=restraunt.getId()){
             return;
         }
-        
+
         if(statusReq.getStatus().equals("accepted")){
             orderItem.setOrderStatus(OrderStatus.ACCEPTED);
+
         }
         if(statusReq.getStatus().equals("completed")){
             orderItem.setOrderStatus(OrderStatus.COMPLETED);
@@ -178,7 +179,7 @@ public class OwnerServiceImpl implements OwnerService{
         if(statusReq.getStatus().equals("rejected")){
             orderItem.setOrderStatus(OrderStatus.REJECTED);
         }
-
+        orderItemRepo.save(orderItem);
 
     }
 }

@@ -106,8 +106,9 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(orderItemDtos);
     }
-    @PutMapping("/orders/{restId}/ownerId/{ownerId}")
+    @PostMapping("/orders/{restId}/ownerId/{ownerId}/change")
     public ResponseEntity<?> updateStatus(@PathVariable Long restId, @PathVariable Long ownerId, @RequestBody StatusReq statusReq){
+        System.out.println(statusReq.getOrderItemId());
         ownerService.updateStatus(restId,ownerId,statusReq);
         Map<String,String> deletemap=new HashMap<>();
         deletemap.put("message","updated successfully");

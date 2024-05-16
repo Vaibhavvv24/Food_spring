@@ -25,19 +25,25 @@ const ResAdmincheck = () => {
   const [restraunt, setRestraunt] = useState("");
   const [status, setStatus] = useState("");
 
-  async function handleStatus(e) {
-    e.preventDefault();
+  async function handleStatus(id) {
     const res = await fetch(
-      `http://localhost:8080/api/owner/orders/${restraunt}/${status}/ownerId/${currentUser.id}`,
+      `http://localhost:8080/api/owner/orders/${restraunt}/ownerId/${currentUser.id}/change`,
       {
+        method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: "Bearer " + currentUser.jwt,
         },
+        body: JSON.stringify({
+          status: status,
+          orderItemId: id,
+        }),
       }
     );
     const data = await res.json();
+    alert("Status changed successfully");
+    window.location.reload();
     console.log(data);
-    setOrderItems(data);
   }
   const fetchOrders = async (e) => {
     e.preventDefault();
@@ -95,10 +101,10 @@ const ResAdmincheck = () => {
             <input
               type="text"
               placeholder="status"
-              value={item.orderStatus}
+              value={status}
               onChange={(e) => setStatus(e.target.value)}
             />
-            <button onClick={handleStatus}>Change Status</button>
+            <button onClick={() => handleStatus(item.id)}>Change Status</button>
           </div>
         </div>
       ))}
