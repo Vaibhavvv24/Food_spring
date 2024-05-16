@@ -171,7 +171,7 @@ public class CustServiceImpl implements CustService{
 
 
     @Override
-    public OrderItemDto addOrder(Long userId, Long restrauntId,CartOrder cartOrder) {
+    public OrderItemDto addOrder(Long userId, Long restrauntId,int total) {
         User user=userRepo.findById(userId).get();
         //Cart cart=cartRepo.findByCustomer(user);
 
@@ -185,7 +185,7 @@ public class CustServiceImpl implements CustService{
         orderItem.setUser(user);
         orderItem.setOrderedAt(new Date(System.currentTimeMillis()));
         orderItem.setOrder(order);
-        orderItem.setTotal(cartOrder.getPrice());
+        orderItem.setTotal(total);
 
         OrderItem savedOne=orderItemRepo.save(orderItem);
         OrderItemDto orderItemDto=new OrderItemDto();

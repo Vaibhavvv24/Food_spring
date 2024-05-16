@@ -5,7 +5,7 @@ import Base64decode from "../components/Base64decode";
 function calculateTotal(cart) {
   let total = 0;
   for (let i = 0; i < cart.length; i++) {
-    total += cart[i].price;
+    total += cart[i].productPrice;
   }
   return total;
 }
@@ -33,19 +33,16 @@ const Cart = () => {
     fetchCart();
   }, []);
   async function handleorder() {
-    console.log(cart);
     const total = calculateTotal(cart);
-    console.log(JSON.stringify(cart));
+    console.log(total);
     const res = await fetch(
-      `http://localhost:8080/api/customer/order/${currentUser.id}/restraunt/${cart[0].restId}/orders`,
+      `http://localhost:8080/api/customer/order/${currentUser.id}/restraunt/${cart[0].restId}/orders/${total}`,
       {
         method: "POST",
         headers: {
           Authorization: "Bearer " + currentUser.jwt,
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          price: total,
-        }),
       }
     );
     const data = await res.json();
