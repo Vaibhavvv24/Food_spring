@@ -24,6 +24,17 @@ const Cart = () => {
     };
     fetchCart();
   }, []);
+  async function handleorder() {
+    const res = await fetch(
+      `http://localhost:8080/api/customer/order/${currentUser.id}/restraunt/${cart[0].restId}/cart/${cart[0].cartId}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + currentUser.jwt,
+        },
+      }
+    );
+  }
 
   const handleRemove = async (prodId) => {
     const res = await fetch(
@@ -75,6 +86,7 @@ const Cart = () => {
         </div>
       ))}
       <button onClick={handleDelete}>Clear Cart</button>
+      <button onClick={handleorder}>Place Order</button>
     </div>
   );
 };

@@ -174,7 +174,7 @@ public class CustServiceImpl implements CustService{
         User user=userRepo.findById(userId).get();
         Cart cart=cartRepo.findByCustomer(user);
         Order order=orderRepo.findByUser(user);
-        order.setOrderItems();
+        //order.setOrderItems();
         Restraunt restraunt=repo.findById(restrauntId).get();
         OrderItem orderItem=new OrderItem();
         orderItem.setCart(cart);
@@ -190,12 +190,13 @@ public class CustServiceImpl implements CustService{
 
     }
 
-    @Override
-    public List<OrderItemDto> getOrders(Long userId) {
-        User user=userRepo.findById(userId).get();
-        Order order=orderRepo.findByUser(user);
-
-    }
+//    @Override
+//    public List<OrderItemDto> getOrders(Long userId) {
+//        User user=userRepo.findById(userId).get();
+//        Order order=orderRepo.findByUser(user);
+//
+//
+//    }
 
     @Override
     public CartItemDto addToCart(CartRequest cartRequest, Long productId,Long userId) {

@@ -42,5 +42,5 @@ public interface CustService {
 
     OrderItemDto addOrder(Long userId, Long restrauntId, Long cartId);
 
-    List<OrderItemDto> getOrders(Long userId);
+//    List<OrderItemDto> getOrders(Long userId);
 }
