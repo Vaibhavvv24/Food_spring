@@ -45,8 +45,6 @@ const Cart = () => {
         },
         body: JSON.stringify({
           price: total,
-          restId: cart[0].restId,
-          items: cart,
         }),
       }
     );

@@ -38,7 +38,7 @@ public class CustServiceImpl implements CustService{
 
     private final CatRepo catRepo;
 
-    private final OrderCartItemsRepo orderCartItemsRepo;
+
 
     private final ProductRepo productRepo;
 
@@ -51,10 +51,9 @@ public class CustServiceImpl implements CustService{
     private final CartItemRepo cartItemRepo;
     private final PasswordEncoder passwordEncoder;
 
-    public CustServiceImpl(UserRepo userRepo, CatRepo catRepo, OrderCartItemsRepo orderCartItemsRepo, ProductRepo productRepo, CartRepo cartRepo, OrderItemRepo orderItemRepo, OrderRepo orderRepo, ResRepo repo, CartItemRepo cartItemRepo, PasswordEncoder passwordEncoder) {
+    public CustServiceImpl(UserRepo userRepo, CatRepo catRepo, ProductRepo productRepo, CartRepo cartRepo, OrderItemRepo orderItemRepo, OrderRepo orderRepo, ResRepo repo, CartItemRepo cartItemRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.catRepo = catRepo;
-        this.orderCartItemsRepo = orderCartItemsRepo;
         this.productRepo = productRepo;
         this.cartRepo = cartRepo;
         this.orderItemRepo = orderItemRepo;
@@ -186,15 +185,7 @@ public class CustServiceImpl implements CustService{
         orderItem.setUser(user);
         orderItem.setOrderedAt(new Date(System.currentTimeMillis()));
         orderItem.setOrder(order);
-
-        for(CartItem cartItem: cartOrder.getItems()){
-            OrderCartItems oc=new OrderCartItems();
-            oc.setPrice(cartItem.getProduct().getPrice());
-            oc.setName(cartItem.getProduct().getProductName());
-            oc.setRestraunt(cartItem.getRestraunt());
-            oc.setOrderItem(orderItem);
-            orderCartItemsRepo.save(oc);
-        }
+        orderItem.setTotal(cartOrder.getPrice());
 
         OrderItem savedOne=orderItemRepo.save(orderItem);
         OrderItemDto orderItemDto=new OrderItemDto();
@@ -225,6 +216,7 @@ public class CustServiceImpl implements CustService{
             orderItemDto.setRestId(orderItem.getRestraunt().getId());
             orderItemDto.setOwnerName(orderItem.getUser().getName());
             orderItemDto.setRestName(orderItem.getRestraunt().getName());
+            orderItemDto.setTotal(orderItem.getTotal());
 //            orderItemDto.setCartId(orderItem.getCart().getId());
             orderItemDtos.add(orderItemDto);
 

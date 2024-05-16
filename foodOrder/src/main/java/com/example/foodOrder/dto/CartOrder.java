@@ -7,14 +7,8 @@ import java.util.List;
 public class CartOrder {
 
     private int price;
-
-    private Long restId;
-    private List<CartItem> items;
-
-    public CartOrder(int price, Long restId, List<CartItem> items) {
+    public CartOrder(int price) {
         this.price = price;
-        this.restId = restId;
-        this.items = items;
     }
 
     public int getPrice() {
@@ -25,20 +19,5 @@ public class CartOrder {
         this.price = price;
     }
 
-    public Long getRestId() {
-        return restId;
-    }
-
-    public void setRestId(Long restId) {
-        this.restId = restId;
-    }
-
-    public List<CartItem> getItems() {
-        return items;
-    }
-
-    public void setItems(List<CartItem> items) {
-        this.items = items;
-    }
 }
 

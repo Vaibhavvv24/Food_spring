@@ -35,6 +35,9 @@ public class OrderItem {
     @JsonIgnore
     private Restraunt restraunt;
 
+    private int total;
+
+
     private OrderStatus orderStatus;
 
     private Date orderedAt;
@@ -108,6 +111,14 @@ public class OrderItem {
     }
 
 
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
     public OrderItemDto getOrderItemDto() {
         OrderItemDto orderItemDto=new OrderItemDto();
         orderItemDto.setOrderId(orders.getId());
@@ -118,6 +129,7 @@ public class OrderItem {
         orderItemDto.setId(id);
         orderItemDto.setOwnerName(user.getName());
         orderItemDto.setUserId(user.getId());
+        orderItemDto.setTotal(total);
         return orderItemDto;
     }
 }

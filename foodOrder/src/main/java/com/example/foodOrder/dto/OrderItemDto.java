@@ -28,6 +28,10 @@ public class OrderItemDto {
 
     private Long orderId;
 
+    private int total;
+
+
+
     public OrderItemDto(){
 
     }
@@ -36,6 +40,14 @@ public class OrderItemDto {
     public OrderItemDto(OrderStatus orderStatus, Date orderedAt) {
         this.orderStatus = orderStatus;
         this.orderedAt = orderedAt;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public Long getId() {
