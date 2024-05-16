@@ -1,11 +1,14 @@
 package com.example.foodOrder.service.owner;
 
 import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.OrderItemDto;
 import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.entity.Category;
+import com.example.foodOrder.entity.OrderItem;
 import com.example.foodOrder.entity.Product;
 import com.example.foodOrder.entity.Restraunt;
 import com.example.foodOrder.repo.CatRepo;
+import com.example.foodOrder.repo.OrderItemRepo;
 import com.example.foodOrder.repo.ProductRepo;
 import com.example.foodOrder.repo.ResRepo;
 import org.springframework.security.core.parameters.P;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
@@ -42,11 +46,14 @@ public class OwnerServiceImpl implements OwnerService{
 
     private final ResRepo repo;
 
+    private final OrderItemRepo orderItemRepo;
+
     private final ProductRepo productRepo;
 
-    public OwnerServiceImpl(CatRepo catRepo, ResRepo repo, ProductRepo productRepo) {
+    public OwnerServiceImpl(CatRepo catRepo, ResRepo repo, OrderItemRepo orderItemRepo, ProductRepo productRepo) {
         this.catRepo = catRepo;
         this.repo = repo;
+        this.orderItemRepo = orderItemRepo;
         this.productRepo = productRepo;
     }
 
@@ -125,8 +132,29 @@ public class OwnerServiceImpl implements OwnerService{
 
     @Override
     public List<CategoryDto> getCatbyResOwner(Long restId) {
-        return catRepo.findALlByRestrauntId(restId).stream().map(Category::getCatDto).collect(Collectors.toList());
+        return catRepo.findAllByRestrauntId(restId).stream().map(Category::getCatDto).collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderItemDto> getOrders(Long restId) {
+        Restraunt restraunt = repo.findById(restId).get();
+        List<OrderItemDto> orderItemDtos = new ArrayList<>();
+        List<OrderItem> orderItems = new ArrayList<>();
+        orderItems = orderItemRepo.findAllByRestraunt(restraunt);
+        for (OrderItem orderItem : orderItems) {
+            System.out.println(orderItem);
+            OrderItemDto orderItemDto = new OrderItemDto();
+            orderItemDto.setOrderId(orderItem.getOrder().getId());
+            orderItemDto.setOrderedAt(orderItem.getOrderedAt());
+            orderItemDto.setOrderStatus(orderItem.getOrderStatus());
+            orderItemDto.setId(orderItem.getId());
+            orderItemDto.setUserId(orderItem.getUser().getId());
+            orderItemDto.setRestId(orderItem.getRestraunt().getId());
+            orderItemDto.setOwnerName(orderItem.getUser().getName());
+            orderItemDto.setRestName(orderItem.getRestraunt().getName());
+            orderItemDtos.add(orderItemDto);
+        }
+        return orderItemDtos;
 
+    }
 }

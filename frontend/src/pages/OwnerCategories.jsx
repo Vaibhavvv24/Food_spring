@@ -20,6 +20,7 @@ const OwnerCategories = () => {
       }
     );
     const data = await res.json();
+    console.log(data);
     setCategories(data);
   };
   useEffect(() => {
@@ -66,7 +67,7 @@ const OwnerCategories = () => {
               Description: {category.description}
             </p>
             <p className="text-xl text-center">Restaurant: {category.restId}</p>
-            <Base64decode base64String={category.returnedimg} />
+            <Base64decode base64String={category.returnedimage} />
             <button
               className="p-2 bg-green-200 rounded-md "
               onClick={() => navigate(`/owner/products/${id}`)}

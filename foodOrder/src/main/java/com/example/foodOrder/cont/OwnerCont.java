@@ -1,6 +1,7 @@
 package com.example.foodOrder.cont;
 
 import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.OrderItemDto;
 import com.example.foodOrder.dto.ProductDto;
 import com.example.foodOrder.dto.ResDto;
 import com.example.foodOrder.service.owner.OwnerService;
@@ -87,13 +88,22 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(productDtos);
     }
-    @DeleteMapping("{restId}/products/delete/{prodId}")
+    @DeleteMapping("/{restId}/products/delete/{prodId}")
     public ResponseEntity<?> deleteByProdId(@PathVariable Long prodId,@PathVariable Long restId){
         ownerService.deleteByProductId(prodId,restId);
         Map<String,String> deletemap=new HashMap<>();
         deletemap.put("message","deleted successfully"+restId);
         return ResponseEntity.ok().body(deletemap);
 
+    }
+    @GetMapping("/orders/{restId}/owner")
+    public ResponseEntity<?> getOrders(@PathVariable Long restId){
+        List<OrderItemDto> orderItemDtos=ownerService.getOrders(restId);
+        System.out.println(orderItemDtos.size());
+        if(orderItemDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(orderItemDtos);
     }
 
 

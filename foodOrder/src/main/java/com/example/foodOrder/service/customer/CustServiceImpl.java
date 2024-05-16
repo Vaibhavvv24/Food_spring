@@ -115,7 +115,7 @@ public class CustServiceImpl implements CustService{
 
     @Override
     public List<CategoryDto> getCatbyRes(Long restId) {
-        return catRepo.findALlByRestrauntId(restId).stream().map(Category::getCatDto).collect(Collectors.toList());
+        return catRepo.findAllByRestrauntId(restId).stream().map(Category::getCatDto).collect(Collectors.toList());
     }
 
     @Override
@@ -125,7 +125,7 @@ public class CustServiceImpl implements CustService{
 
     @Override
     public List<CategoryDto> getCatbyName(String name) {
-        return catRepo.findALlByNameContaining(name).stream().map(Category::getCatDto).collect(Collectors.toList());
+        return catRepo.findAllByNameContaining(name).stream().map(Category::getCatDto).collect(Collectors.toList());
 
     }
 

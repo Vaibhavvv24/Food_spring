@@ -108,4 +108,16 @@ public class OrderItem {
     }
 
 
+    public OrderItemDto getOrderItemDto() {
+        OrderItemDto orderItemDto=new OrderItemDto();
+        orderItemDto.setOrderId(orders.getId());
+        orderItemDto.setOrderStatus(orderStatus);
+        orderItemDto.setRestName(restraunt.getName());
+        orderItemDto.setRestId(restraunt.getId());
+        orderItemDto.setOrderedAt(orderedAt);
+        orderItemDto.setId(id);
+        orderItemDto.setOwnerName(user.getName());
+        orderItemDto.setUserId(user.getId());
+        return orderItemDto;
+    }
 }

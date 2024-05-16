@@ -38,7 +38,7 @@ const AddProduct = () => {
         }
       );
       console.log("Response:", response.data);
-      alert("Category added successfully");
+      alert("Product added successfully");
       // Handle response as needed
     } catch (error) {
       console.error("Error uploading file:", error);

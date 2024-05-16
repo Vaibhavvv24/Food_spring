@@ -1,6 +1,7 @@
 package com.example.foodOrder.service.owner;
 
 import com.example.foodOrder.dto.CategoryDto;
+import com.example.foodOrder.dto.OrderItemDto;
 import com.example.foodOrder.dto.ProductDto;
 
 import java.sql.Blob;
@@ -24,4 +25,6 @@ public interface OwnerService {
 
 
     List<CategoryDto> getCatbyResOwner(Long restId);
+
+    List<OrderItemDto> getOrders(Long restId);
 }

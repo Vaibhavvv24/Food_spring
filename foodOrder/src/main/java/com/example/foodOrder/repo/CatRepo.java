@@ -9,9 +9,11 @@ import java.util.List;
 
 @Repository
 public interface CatRepo extends JpaRepository<Category,Long> {
-    List<Category> findALlByRestrauntId(Long restId);
+    List<Category> findAllByRestrauntId(Long restId);
 
     List<Category> findAllByRestrauntNameContaining(String restName);
 
-    List<Category> findALlByNameContaining(String name);
+    List<Category> findAllByNameContaining(String name);
+
+//    List<Category> findAllByNameContaining(String name);
 }
