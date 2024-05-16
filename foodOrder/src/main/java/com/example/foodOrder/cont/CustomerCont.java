@@ -188,9 +188,9 @@ public class CustomerCont {
 
     //order of cust
     @PostMapping("/order/{userId}/restraunt/{restrauntId}/orders")
-    public ResponseEntity<?> postOrder(@PathVariable Long userId,@PathVariable Long restrauntId){
+    public ResponseEntity<?> postOrder(@PathVariable Long userId,@PathVariable Long restrauntId,@RequestBody CartOrder cart){
        OrderItemDto orderItemDto;
-        orderItemDto = custService.addOrder(userId,restrauntId);
+        orderItemDto = custService.addOrder(userId,restrauntId,cart);
         if (orderItemDto == null) {
             return ResponseEntity.badRequest().build();
         }

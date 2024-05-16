@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Base64decode from "../components/Base64decode";
 
+function calculateTotal(cart) {
+  let total = 0;
+  for (let i = 0; i < cart.length; i++) {
+    total += cart[i].price;
+  }
+  return total;
+}
+
 const Cart = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
@@ -25,6 +33,9 @@ const Cart = () => {
     fetchCart();
   }, []);
   async function handleorder() {
+    console.log(cart);
+    const total = calculateTotal(cart);
+    console.log(JSON.stringify(cart));
     const res = await fetch(
       `http://localhost:8080/api/customer/order/${currentUser.id}/restraunt/${cart[0].restId}/orders`,
       {
@@ -32,10 +43,18 @@ const Cart = () => {
         headers: {
           Authorization: "Bearer " + currentUser.jwt,
         },
+        body: JSON.stringify({
+          price: total,
+          restId: cart[0].restId,
+          items: cart,
+        }),
       }
     );
     const data = await res.json();
     console.log(data);
+    alert("Order placed successfully");
+    handleDelete();
+    navigate("/");
   }
 
   const handleRemove = async (prodId) => {
