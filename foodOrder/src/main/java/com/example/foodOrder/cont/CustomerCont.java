@@ -187,10 +187,10 @@ public class CustomerCont {
     }
 
     //order of cust
-    @PostMapping("/order/{userId}/restraunt/{restrauntId}/cart/{cartId}")
-    public ResponseEntity<?> postOrder(@PathVariable Long userId,@PathVariable Long restrauntId,@PathVariable Long cartId){
+    @PostMapping("/order/{userId}/restraunt/{restrauntId}/orders")
+    public ResponseEntity<?> postOrder(@PathVariable Long userId,@PathVariable Long restrauntId){
        OrderItemDto orderItemDto;
-        orderItemDto = custService.addOrder(userId,restrauntId,cartId);
+        orderItemDto = custService.addOrder(userId,restrauntId);
         if (orderItemDto == null) {
             return ResponseEntity.badRequest().build();
         }

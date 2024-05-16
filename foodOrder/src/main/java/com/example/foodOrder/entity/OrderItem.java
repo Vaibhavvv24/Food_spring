@@ -23,11 +23,11 @@ public class OrderItem {
     private User user;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = true)
-    @JoinColumn(name = "cart_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Cart cart;
+//    @ManyToOne(fetch = FetchType.LAZY,optional = true)
+//    @JoinColumn(name = "cart_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+//    private Cart cart;
 
     @ManyToOne(fetch = FetchType.LAZY,optional= true)
     @JoinColumn(name = "restraunt_id")
@@ -84,13 +84,13 @@ public class OrderItem {
         this.user = user;
     }
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
+//    public Cart getCart() {
+//        return cart;
+//    }
+//
+//    public void setCart(Cart cart) {
+//        this.cart = cart;
+//    }
     public Restraunt getRestraunt() {
         return restraunt;
     }

@@ -40,7 +40,7 @@ public interface CustService {
 
     ProductDto getProductbyId(Long id);
 
-    OrderItemDto addOrder(Long userId, Long restrauntId, Long cartId);
+    OrderItemDto addOrder(Long userId, Long restrauntId);
 
     List<OrderItemDto> getOrders(Long userId);
 }

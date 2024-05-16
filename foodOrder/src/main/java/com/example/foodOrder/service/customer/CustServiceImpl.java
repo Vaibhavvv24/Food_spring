@@ -167,14 +167,14 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
-    public OrderItemDto addOrder(Long userId, Long restrauntId, Long cartId) {
+    public OrderItemDto addOrder(Long userId, Long restrauntId) {
         User user=userRepo.findById(userId).get();
-        Cart cart=cartRepo.findByCustomer(user);
+        //Cart cart=cartRepo.findByCustomer(user);
         Order order=orderRepo.findByUser(user);
         //order.setOrderItems();
         Restraunt restraunt=repo.findById(restrauntId).get();
         OrderItem orderItem=new OrderItem();
-        orderItem.setCart(cart);
+       // orderItem.setCart(cart);
         orderItem.setRestraunt(restraunt);
         orderItem.setOrderStatus(OrderStatus.PENDING);
         orderItem.setUser(user);
@@ -201,15 +201,15 @@ public class CustServiceImpl implements CustService{
             orderItemDto.setOrderStatus(orderItem.getOrderStatus());
             orderItemDto.setId(orderItem.getId());
             orderItemDto.setUserId(orderItem.getUser().getId());
-            Optional<Cart> cart=cartRepo.findById(orderItem.getCart().getId());
-            if(cart.isPresent()){
-                orderItemDto.setCartItemList(cart.get().getCartItems());
-
-            }
+//            Optional<Cart> cart=cartRepo.findById(orderItem.getCart().getId());
+//            if(cart.isPresent()){
+//                orderItemDto.setCartItemList(cart.get().getCartItems());
+//
+//            }
             orderItemDto.setRestId(orderItem.getRestraunt().getId());
             orderItemDto.setOwnerName(orderItem.getUser().getName());
             orderItemDto.setRestName(orderItem.getRestraunt().getName());
-            orderItemDto.setCartId(orderItem.getCart().getId());
+//            orderItemDto.setCartId(orderItem.getCart().getId());
             orderItemDtos.add(orderItemDto);
 
         }

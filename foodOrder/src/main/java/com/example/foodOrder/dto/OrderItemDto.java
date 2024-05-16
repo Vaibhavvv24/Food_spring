@@ -13,9 +13,9 @@ public class OrderItemDto {
 
     private Long UserId;
 
-    private Long CartId;
-
-    private List<CartItem> cartItemList;
+//    private Long CartId;
+//
+//    private List<CartItem> cartItemList;
 
 
     private Long restId;
@@ -62,21 +62,21 @@ public class OrderItemDto {
         UserId = userId;
     }
 
-    public Long getCartId() {
-        return CartId;
-    }
+//    public Long getCartId() {
+//        return CartId;
+//    }
 
-    public void setCartId(Long cartId) {
-        CartId = cartId;
-    }
-
-    public List<CartItem> getCartItemList() {
-        return cartItemList;
-    }
-
-    public void setCartItemList(List<CartItem> cartItemList) {
-        this.cartItemList = cartItemList;
-    }
+//    public void setCartId(Long cartId) {
+//        CartId = cartId;
+//    }
+//
+//    public List<CartItem> getCartItemList() {
+//        return cartItemList;
+//    }
+//
+//    public void setCartItemList(List<CartItem> cartItemList) {
+//        this.cartItemList = cartItemList;
+//    }
 
     public Long getRestId() {
         return restId;

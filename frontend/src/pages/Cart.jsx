@@ -26,7 +26,7 @@ const Cart = () => {
   }, []);
   async function handleorder() {
     const res = await fetch(
-      `http://localhost:8080/api/customer/order/${currentUser.id}/restraunt/${cart[0].restId}/cart/${cart[0].cartId}`,
+      `http://localhost:8080/api/customer/order/${currentUser.id}/restraunt/${cart[0].restId}/orders`,
       {
         method: "POST",
         headers: {
