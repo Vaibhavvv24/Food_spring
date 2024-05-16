@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.List;
+
 @Entity
 public class Cart {
 
@@ -17,6 +19,10 @@ public class Cart {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User customer;
+
+    @OneToMany(mappedBy = "cart")
+    private List<CartItem> cartItems;
+
 
 
 
@@ -51,5 +57,13 @@ public class Cart {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }

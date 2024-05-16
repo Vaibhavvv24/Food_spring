@@ -11,10 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -190,13 +187,35 @@ public class CustServiceImpl implements CustService{
 
     }
 
-//    @Override
-//    public List<OrderItemDto> getOrders(Long userId) {
-//        User user=userRepo.findById(userId).get();
-//        Order order=orderRepo.findByUser(user);
-//
-//
-//    }
+    @Override
+    public List<OrderItemDto> getOrders(Long userId) {
+        User user=userRepo.findById(userId).get();
+        Order order=orderRepo.findByUser(user);
+        List<OrderItem> orderItems=order.getOrderItems();
+        List<OrderItemDto> orderItemDtos=new ArrayList<>();
+        for(OrderItem orderItem :orderItems){
+            System.out.println(orderItem);
+            OrderItemDto orderItemDto=new OrderItemDto();
+            orderItemDto.setOrderId(order.getId());
+            orderItemDto.setOrderedAt(orderItem.getOrderedAt());
+            orderItemDto.setOrderStatus(orderItem.getOrderStatus());
+            orderItemDto.setId(orderItem.getId());
+            orderItemDto.setUserId(orderItem.getUser().getId());
+            Optional<Cart> cart=cartRepo.findById(orderItem.getCart().getId());
+            if(cart.isPresent()){
+                orderItemDto.setCartItemList(cart.get().getCartItems());
+
+            }
+            orderItemDto.setRestId(orderItem.getRestraunt().getId());
+            orderItemDto.setOwnerName(orderItem.getUser().getName());
+            orderItemDto.setRestName(orderItem.getRestraunt().getName());
+            orderItemDto.setCartId(orderItem.getCart().getId());
+            orderItemDtos.add(orderItemDto);
+
+        }
+        return orderItemDtos;
+
+    }
 
     @Override
     public CartItemDto addToCart(CartRequest cartRequest, Long productId,Long userId) {

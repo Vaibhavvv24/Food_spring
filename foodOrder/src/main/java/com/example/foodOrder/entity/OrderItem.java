@@ -1,5 +1,6 @@
 package com.example.foodOrder.entity;
 
+import com.example.foodOrder.dto.OrderItemDto;
 import com.example.foodOrder.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -105,4 +106,6 @@ public class OrderItem {
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+
 }

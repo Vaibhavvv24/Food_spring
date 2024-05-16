@@ -34,6 +34,8 @@ const Cart = () => {
         },
       }
     );
+    const data = await res.json();
+    console.log(data);
   }
 
   const handleRemove = async (prodId) => {
