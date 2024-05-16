@@ -3,14 +3,8 @@ package com.example.foodOrder.service.owner;
 import com.example.foodOrder.dto.CategoryDto;
 import com.example.foodOrder.dto.OrderItemDto;
 import com.example.foodOrder.dto.ProductDto;
-import com.example.foodOrder.entity.Category;
-import com.example.foodOrder.entity.OrderItem;
-import com.example.foodOrder.entity.Product;
-import com.example.foodOrder.entity.Restraunt;
-import com.example.foodOrder.repo.CatRepo;
-import com.example.foodOrder.repo.OrderItemRepo;
-import com.example.foodOrder.repo.ProductRepo;
-import com.example.foodOrder.repo.ResRepo;
+import com.example.foodOrder.entity.*;
+import com.example.foodOrder.repo.*;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -46,13 +40,15 @@ public class OwnerServiceImpl implements OwnerService{
 
     private final ResRepo repo;
 
+    private final UserRepo userRepo;
     private final OrderItemRepo orderItemRepo;
 
     private final ProductRepo productRepo;
 
-    public OwnerServiceImpl(CatRepo catRepo, ResRepo repo, OrderItemRepo orderItemRepo, ProductRepo productRepo) {
+    public OwnerServiceImpl(CatRepo catRepo, ResRepo repo, UserRepo userRepo, OrderItemRepo orderItemRepo, ProductRepo productRepo) {
         this.catRepo = catRepo;
         this.repo = repo;
+        this.userRepo = userRepo;
         this.orderItemRepo = orderItemRepo;
         this.productRepo = productRepo;
     }
@@ -136,8 +132,12 @@ public class OwnerServiceImpl implements OwnerService{
     }
 
     @Override
-    public List<OrderItemDto> getOrders(Long restId) {
+    public List<OrderItemDto> getOrders(Long restId,Long ownerId) {
         Restraunt restraunt = repo.findById(restId).get();
+        User owner=userRepo.findById(ownerId).get();
+        if(restraunt.getOwner().getId()!=ownerId){
+            return new ArrayList<>();
+        }
         List<OrderItemDto> orderItemDtos = new ArrayList<>();
         List<OrderItem> orderItems = new ArrayList<>();
         orderItems = orderItemRepo.findAllByRestraunt(restraunt);

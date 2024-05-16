@@ -17,6 +17,7 @@ import RestrauntCust from "./pages/RestrauntCust";
 import ProductIndividual from "./pages/ProductIndividual";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
+import ResAdmincheck from "./pages/ResAdmincheck";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           <Route path="/product/:id" element={<ProductIndividual />} />
           <Route path="/cart/:id" element={<Cart />} />
           <Route path="/orders/:id" element={<Orders />} />
+          <Route path="/restraunt/orders" element={<ResAdmincheck />} />
         </Routes>
       </BrowserRouter>
     </div>

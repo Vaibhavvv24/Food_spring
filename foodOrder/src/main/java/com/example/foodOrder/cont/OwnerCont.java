@@ -96,15 +96,20 @@ public class OwnerCont {
         return ResponseEntity.ok().body(deletemap);
 
     }
-    @GetMapping("/orders/{restId}/owner")
-    public ResponseEntity<?> getOrders(@PathVariable Long restId){
-        List<OrderItemDto> orderItemDtos=ownerService.getOrders(restId);
+    @GetMapping("/orders/{restId}/ownerId/{ownerId}")
+    public ResponseEntity<?> getOrders(@PathVariable Long restId,@PathVariable Long ownerId){
+
+        List<OrderItemDto> orderItemDtos=ownerService.getOrders(restId,ownerId);
         System.out.println(orderItemDtos.size());
+        Map<String,String> wrongmap=new HashMap<>();
+
         if(orderItemDtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            wrongmap.put("message", "you can access only your orders");
+            return ResponseEntity.badRequest().body(wrongmap);
         }
         return ResponseEntity.ok().body(orderItemDtos);
     }
+    @PutMapping("/orders/{restId}/ownerId/{ownerId}/status")
 
 
 

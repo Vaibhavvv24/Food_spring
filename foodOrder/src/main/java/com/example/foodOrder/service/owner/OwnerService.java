@@ -26,5 +26,5 @@ public interface OwnerService {
 
     List<CategoryDto> getCatbyResOwner(Long restId);
 
-    List<OrderItemDto> getOrders(Long restId);
+    List<OrderItemDto> getOrders(Long restId,Long ownerId);
 }
