@@ -52,6 +52,12 @@ const Navbar = () => {
               {/* <Link to="/admin/reservations">Reservations</Link> */}
             </li>
           )}
+
+          {currentUser && currentUser.role === "OWNER" && (
+            <li className="flex gap-3">
+              <Link to="/owner/dashboard">Dashboard</Link>
+            </li>
+          )}
           {currentUser && currentUser.role === "CUSTOMER" && (
             <li className="flex gap-3">
               <button onClick={() => navigate(`/cart/${currentUser.id}`)}>

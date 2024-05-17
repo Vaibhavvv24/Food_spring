@@ -43,14 +43,17 @@ const RestrauntView = () => {
   }
 
   return (
-    <div>
-      <h1>RestrauntView</h1>
-      <h1>{restaurant.name}</h1>
-      <h1>{restaurant.address}</h1>
+    <div className="flex flex-col items-center gap-3 justify-center">
+      <h1>Restraunt Details</h1>
       <Base64decode base64String={imageString} />
-      <h1>{restaurant.ownerId}</h1>
-      <h1>{restaurant.ownerName}</h1>
-      <button onClick={handleDelete}>Delete Restraunt</button>
+      <h1>Name: {restaurant.name}</h1>
+      <h1>Address: {restaurant.address}</h1>
+
+      <h1>OwnerId: {restaurant.ownerId}</h1>
+      <h1>OwnerName: {restaurant.ownerName}</h1>
+      <button onClick={handleDelete} className="bg-red-500 p-3 rounded-md">
+        Delete Restraunt
+      </button>
     </div>
   );
 };

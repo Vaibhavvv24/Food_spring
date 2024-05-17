@@ -66,7 +66,9 @@ const OwnerCategories = () => {
             <p className="text-xl text-center">
               Description: {category.description}
             </p>
-            <p className="text-xl text-center">Restaurant: {category.restId}</p>
+            <p className="text-xl text-center">
+              Restaurant: {category.restName}
+            </p>
             <Base64decode base64String={category.returnedimage} />
             <button
               className="p-2 bg-green-200 rounded-md "

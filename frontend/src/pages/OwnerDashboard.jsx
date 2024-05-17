@@ -46,20 +46,25 @@ const OwnerDashboard = () => {
   return (
     <div>
       <div>
-        <h1>Owner Dashboard</h1>
-        <div>
-          <h1>Add Category</h1>
-          <form onSubmit={handleSubmit}>
+        <h1 className="text-center text-3xl font-bold">Owner Dashboard</h1>
+        <div className="flex flex-col justify-center bg-green-300 mt-10">
+          <h1 className="text-center text-xl font-bold">Add Category</h1>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-4 items-center"
+          >
             <input
               type="text"
               placeholder="Name"
               value={name}
+              className="w-1/3 p-3 shadow-lg "
               onChange={(e) => setName(e.target.value)}
             />
             <input
               type="text"
               placeholder="Description"
               value={description}
+              className="w-1/3 p-3 shadow-lg "
               onChange={(e) => setDescription(e.target.value)}
             />
             <input type="file" onChange={(e) => setImage(e.target.files[0])} />
@@ -67,6 +72,7 @@ const OwnerDashboard = () => {
               type="text"
               placeholder="Restraunt Id"
               value={restId}
+              className="w-1/3 p-3 shadow-lg "
               onChange={(e) => setRestId(e.target.value)}
             />
             <button type="submit">Add Category</button>

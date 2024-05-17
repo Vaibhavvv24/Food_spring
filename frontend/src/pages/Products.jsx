@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Base64decode from "../components/Base64decode";
 
+//wrong page
+
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
