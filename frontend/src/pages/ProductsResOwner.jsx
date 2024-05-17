@@ -41,7 +41,7 @@ const ProductsResOwner = () => {
       }
     );
     const data = await res.json();
-    alert("Category Deleted successfully");
+    alert("Product Deleted successfully");
     console.log(data);
     fetchProducts();
   };
