@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Base64decode from "../components/Base64decode";
+import { MdDelete } from "react-icons/md";
 
 function calculateTotal(cart) {
   let total = 0;
@@ -28,6 +29,10 @@ const Cart = () => {
       );
       const data = await res.json();
       console.log(data);
+      if (data.message === "Your cart is empty") {
+        alert("Your cart is empty");
+        navigate("/customer/shop");
+      }
       setCart(data);
     };
     fetchCart();
@@ -81,7 +86,7 @@ const Cart = () => {
     alert("Cart cleared successfully");
     navigate("/");
   };
-  if (cart.length === 0) {
+  if (cart.length === 0 || cart === null) {
     return (
       <div>
         <h1>Cart is empty</h1>
@@ -90,19 +95,42 @@ const Cart = () => {
   }
 
   return (
-    <div>
-      Cart
-      {cart.map((item) => (
-        <div className="flex flex-col" key={item.id}>
-          <p>{item.productName}</p>
-          <p>{item.productPrice}</p>
-          <p>{item.restrauntName}</p>
-          <Base64decode base64String={item.productImg} />
-          <button onClick={() => handleRemove(item.id)}>Remove</button>
+    <div className="">
+      <h1 className="text-center my-5 text-2xl">Cart</h1>
+
+      <div className="flex justify-around">
+        <div className="flex flex-col justify-center gap-5">
+          {cart.map((item) => (
+            <div className="flex bg-blue-400 p-5 gap-8" key={item.id}>
+              <Base64decode base64String={item.productImg} />
+              <div className="flex flex-col gap-4">
+                <p>Name: {item.productName}</p>
+                <p>Price: ₹{item.productPrice}</p>
+                <p>Restraunt: {item.restrauntName}</p>
+              </div>
+              <button onClick={() => handleRemove(item.id)}>
+                <MdDelete size={30} />
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
-      <button onClick={handleDelete}>Clear Cart</button>
-      <button onClick={handleorder}>Place Order</button>
+        <div className="flex flex-col gap-5 justify-center items-center bg-red-300 rounded-md w-[300px] h-[300px]">
+          <p className="text-center text-xl">Total: ₹{calculateTotal(cart)}</p>
+          <p className="text-center text-xl">Cart Items: {cart.length}</p>
+          <button
+            onClick={handleDelete}
+            className="bg-blue-500 text-white p-4 rounded-md"
+          >
+            Clear Cart
+          </button>
+          <button
+            onClick={handleorder}
+            className="bg-blue-500 text-white p-4 rounded-md"
+          >
+            Place Order
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -168,7 +168,7 @@ public class CustomerCont {
         if(cartItemDtoList.isEmpty()){
             Map<String,String> map=new HashMap<>();
             map.put("message","Your cart is empty");
-            return ResponseEntity.badRequest().body(map);
+            return ResponseEntity.ok().body(map);
         }
         return ResponseEntity.ok().body(cartItemDtoList);
     }

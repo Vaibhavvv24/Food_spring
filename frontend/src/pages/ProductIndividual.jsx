@@ -44,14 +44,22 @@ const ProductIndividual = () => {
       }
     );
     const data = await res.json();
+    alert("Product added to cart");
     console.log(data);
   };
   return (
-    <div>
+    <div className="flex ml-20 flex-col justify-center items-center h-[400px] mt-10 w-[300px] bg-blue-300">
+      <Base64decode base64String={imageString} />
       <h1>{product.name}</h1>
       <p>{product.price}</p>
-      <Base64decode base64String={imageString} />
-      <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
+      <p>{product.categoryname}</p>
+      <p>{product.restrauntName}</p>
+      <button
+        onClick={() => handleAddToCart(product.id)}
+        className="bg-red-500 p-4 text-white rounded-md"
+      >
+        Add to Cart
+      </button>
     </div>
   );
 };
