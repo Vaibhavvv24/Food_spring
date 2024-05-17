@@ -34,28 +34,35 @@ const RestrauntAdminSide = () => {
   };
   return (
     <div>
-      <h1>Restraunt</h1>
-      <div>
-        <form onSubmit={handleSubmit}>
+      <h1 className="text-center text-bold text-2xl">Fetch Restraunts</h1>
+      <div className="flex justify-center gap-4 mt-10">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <label>Enter owner id to get details</label>
           <input
             type="text"
             placeholder="Owner id"
             value={ownerId}
             onChange={(e) => setOwnerId(e.target.value)}
+            className="border-2 border-black p-2 shadow-lg "
           />
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            className="p-2 bg-blue-300 text-white rounded-md"
+          >
+            Submit
+          </button>
         </form>
       </div>
 
-      <div>
-        <h1>Name: {restraunt.name}</h1>
-        <h1>Address: {restraunt.address}</h1>
-        <h1>Owner id: {restraunt.ownerId}</h1>
+      <div className="flex flex-col justify-center items-center gap-4 bg-red-300 w-[300px] p-4 mt-10">
         {/* <img src={restraunt.img} alt="" /> */}
         <Base64decode base64String={imageString} />
+        <h1>Name: {restraunt.name}</h1>
+        <h1>Address: {restraunt.address}</h1>
+        <h1>Owner name: {restraunt.ownerName}</h1>
         <button
           onClick={() => navigate(`/admin/dashboard/restraunt/${restraunt.id}`)}
+          className="p-2 bg-blue-300 text-white rounded-md"
         >
           View Details
         </button>

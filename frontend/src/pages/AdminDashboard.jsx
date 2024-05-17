@@ -46,25 +46,27 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <h1>Admin Dashboard</h1>
+      <h1 className="text-3xl text-center font-bold mb-6">Admin Dashboard</h1>
 
-      <div>
+      <div className="flex flex-col justify-center items-center bg-green-300 w-[400px] h-vh ml-[475px] mb-[100px]">
         <form
           className="flex flex-col items-center justify-center gap-6 mt-1 w-[400px] h-[400px]"
           onSubmit={handleSubmit}
         >
-          <h1>Add Restaurant</h1>
+          <h1 className="text-3xl font-semibold">Add Restaurant</h1>
           <input
             type="text"
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className="border-2 border-black p-2 shadow-md"
           />
           <input
             type="text"
             placeholder="Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            className="border-2 border-black p-2 shadow-md"
           />
           <input type="file" onChange={(e) => setImage(e.target.files[0])} />
           <input
@@ -72,8 +74,11 @@ const AdminDashboard = () => {
             placeholder="Owner Id"
             value={ownerId}
             onChange={(e) => setOwnerId(e.target.value)}
+            className="border-2 border-black p-2 shadow-md"
           />
-          <button type="submit">Add</button>
+          <button type="submit" className="bg-red-400 px-4 py-2 rounded-md">
+            Add
+          </button>
         </form>
       </div>
     </div>
