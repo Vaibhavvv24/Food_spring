@@ -154,6 +154,7 @@ public class OwnerServiceImpl implements OwnerService{
             orderItemDto.setRestId(orderItem.getRestraunt().getId());
             orderItemDto.setOwnerName(orderItem.getUser().getName());
             orderItemDto.setRestName(orderItem.getRestraunt().getName());
+            orderItemDto.setTotal(orderItem.getTotal());
             orderItemDtos.add(orderItemDto);
         }
         return orderItemDtos;

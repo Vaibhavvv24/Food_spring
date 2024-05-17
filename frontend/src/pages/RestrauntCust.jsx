@@ -7,7 +7,8 @@ const RestrauntCust = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const [restCats, setRestCats] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [restaurant, setRestaurant] = useState("");
+
   const [searchTermProduct, setSearchTermProduct] = useState("");
   const [clicked, setClicked] = useState(false);
   const [searchTermByCat, setSearchTermByCat] = useState("");
@@ -28,6 +29,7 @@ const RestrauntCust = () => {
     const data = await res.json();
     console.log(data);
     setRestCats(data);
+    setRestaurant(data[0].restName);
   }
 
   useEffect(() => {
@@ -121,16 +123,10 @@ const RestrauntCust = () => {
 
   return (
     <div>
-      <h1>Restraunt</h1>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Enter Category Name"
-        />
-        <button type="submit">Search</button>
-      </form>
+      <h1 className="text-center text-xl font-bold">
+        {restaurant.toUpperCase()}
+      </h1>
+
       {
         <div>
           {restCats.map((restCat) => (

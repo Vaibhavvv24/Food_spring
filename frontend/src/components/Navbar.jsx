@@ -32,7 +32,7 @@ const Navbar = () => {
           </li>
           {currentUser && (
             <li>
-              <Link to={`/profile/${currentUser.id}`}>
+              <Link to={`/customer/profile/${currentUser.id}`}>
                 <div className="flex gap-2">
                   <FaRegUserCircle size={30} />
                 </div>
@@ -54,19 +54,13 @@ const Navbar = () => {
           )}
           {currentUser && currentUser.role === "CUSTOMER" && (
             <li className="flex gap-3">
-              <Link to="/customer/dashboard">Dashboard</Link>
-              {/* <button
-                onClick={() =>
-                  navigate(`/customer/${currentUser.id}/reservations`)
-                }
-              > */}
-              {/* Reservation
-              </button> */}
-              {/* <Link to="/customer/reservations">Reservations</Link> */}
-              {/* <Link to="/cart">Cart</Link> */}
               <button onClick={() => navigate(`/cart/${currentUser.id}`)}>
                 Cart
               </button>
+              <button onClick={() => navigate(`/orders/${currentUser.id}`)}>
+                Orders
+              </button>
+              <button onClick={() => navigate(`/customer/shop`)}>Shop</button>
             </li>
           )}
           {currentUser && (
@@ -74,9 +68,9 @@ const Navbar = () => {
               <Link onClick={handleLogout}>Logout</Link>
             </li>
           )}
-          <li>
+          {/* <li>
             <Link to="/contact">Contact</Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </nav>

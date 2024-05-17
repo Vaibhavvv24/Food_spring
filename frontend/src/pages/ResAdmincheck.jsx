@@ -81,33 +81,48 @@ const ResAdmincheck = () => {
   }
   return (
     <div>
-      <input
-        type="text"
-        placeholder="restraunt id"
-        value={restraunt}
-        onChange={(e) => setRestraunt(e.target.value)}
-      />
-      <button type="submit" onClick={fetchOrders}>
-        Submit
-      </button>
-      {orderItems.map((item) => (
-        <div key={item.id}>
-          <h1>{item.orderId}</h1>
-          <h1>{item.ownerName}</h1>
-          <h1>{item.restName}</h1>
-          <h1>{convertDate(item.orderedAt)}</h1>
-          <div>
-            <h1>{item.orderStatus}</h1>
-            <input
-              type="text"
-              placeholder="status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            />
-            <button onClick={() => handleStatus(item.id)}>Change Status</button>
+      <div className="flex justify-center">
+        <input
+          type="text"
+          placeholder="restraunt id"
+          value={restraunt}
+          className="w-[150px] h-[30px] rounded-md shadow-lg my-10 border "
+          onChange={(e) => setRestraunt(e.target.value)}
+        />
+        <button
+          type="submit"
+          onClick={fetchOrders}
+          className="bg-blue-500 px-2 text-white rounded-md my-10"
+        >
+          fetch
+        </button>
+      </div>
+      <div className="grid grid-row-3 mx-10 gap-4">
+        {orderItems.map((item) => (
+          <div key={item.id} className=" flex bg-blue-200 p-10 gap-2">
+            <h1>Order Id: {item.id}</h1>
+            <h1>Customer Name: {item.ownerName}</h1>
+            {/* <h1>Restraunt: {item.restName}</h1> */}
+            <h1>Bill: ₹{item.total}</h1>
+            <h1>{convertDate(item.orderedAt)}</h1>
+            <div className="flex justify-center gap-3">
+              <h1>Status: {item.orderStatus}</h1>
+              <input
+                type="text"
+                placeholder="status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              />
+              <button
+                className="bg-blue-500 p-1 text-white rounded-md"
+                onClick={() => handleStatus(item.id)}
+              >
+                Change Status
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

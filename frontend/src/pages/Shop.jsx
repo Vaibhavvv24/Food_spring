@@ -7,6 +7,21 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [restraunts, setRestaurants] = useState([]);
   const currentUser = JSON.parse(localStorage.getItem("user"));
+  const [searchTerm, setSearchTerm] = useState("");
+  async function handleSearch(e) {
+    e.preventDefault();
+    const res = await fetch(
+      `http://localhost:8080/api/customer/categories/search/restraunt/${searchTerm}`,
+      {
+        headers: {
+          Authorization: "Bearer " + currentUser.jwt,
+        },
+      }
+    );
+    const data = await res.json();
+    console.log(data);
+    setCategories(data);
+  }
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -37,22 +52,34 @@ const Shop = () => {
 
   return (
     <div>
-      <h1>Shop</h1>
-
-      <div>
-        <h1>Categories</h1>
+      <h1 className="text-center my-5 text-2xl">Shop</h1>
+      <h1 className="text-center my-5 text-2xl">Categories</h1>
+      <div className="flex justify-center my-5">
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Enter Category Name"
+          />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div className="flex justify-center gap-4">
         {categories.map((category) => (
           <div
             key={category.id}
             onClick={() => navigate(`/shop/${category.id}`)}
+            className="flex flex-col gap-4 bg-blue-200 p-10"
           >
             {category.name}
             <Base64decode base64String={category.returnedimage} />
           </div>
         ))}
       </div>
-      <div>
-        <h1>Restraunts</h1>
+
+      <h1 className="text-center my-5 text-2xl">Restraunts</h1>
+      <div className="flex justify-center flex-wrap gap-7">
         {restraunts.map((restraunt) => (
           <div
             key={restraunt.id}

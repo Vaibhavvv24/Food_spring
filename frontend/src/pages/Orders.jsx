@@ -15,7 +15,7 @@ function convertDate(date) {
   const hours = dateObject.getHours();
   const minutes = dateObject.getMinutes();
   const seconds = dateObject.getSeconds();
-  return `Date:${day}-${month}-${year}
+  return `Date: ${day}-${month}-${year}
    Time: ${hours}:${minutes}:${seconds}`;
 }
 const Orders = () => {
@@ -41,16 +41,24 @@ const Orders = () => {
 
   return (
     <div>
-      <h1>Orders</h1>
-      {orders.map((item) => (
-        <div className="flex flex-col" key={item.id}>
-          <p>{item.orderId}</p>
-          <p>{item.orderStatus}</p>
-          <p>{item.restName}</p>
-          <p>{item.ownerName}</p>
-          <p>{convertDate(item.orderedAt)}</p>
-        </div>
-      ))}
+      <h1 className="text-center my-5 text-2xl"> Your Orders</h1>
+      <div className="grid grid-row-3 mx-10 gap-4">
+        {orders.map((item) => (
+          <div className="flex flex-row gap-4 bg-blue-200 p-10" key={item.id}>
+            <p className="text-lg font-semibold">
+              Customer name: {item.ownerName}
+            </p>
+            <p className="text-lg font-semibold">OrderId: {item.id}</p>
+            <p className="text-lg font-semibold">Status: {item.orderStatus}</p>
+            <p className="text-lg font-semibold">Restraunt: {item.restName}</p>
+
+            <p className="text-lg font-semibold">Bill: ₹{item.total}</p>
+            <p className="text-lg font-semibold">
+              {convertDate(item.orderedAt)}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
