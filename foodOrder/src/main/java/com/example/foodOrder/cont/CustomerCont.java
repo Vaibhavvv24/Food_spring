@@ -141,7 +141,8 @@ public class CustomerCont {
         List<ProductDto> productDtos = custService.getProductbyNameandRestrauntandCat(productName,restrauntId,catId);
         System.out.println(productDtos.size());
         if (productDtos.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            ArrayList arrayList=new ArrayList<>();
+            return ResponseEntity.ok().body(arrayList);
         }
         return ResponseEntity.ok().body(productDtos);
 

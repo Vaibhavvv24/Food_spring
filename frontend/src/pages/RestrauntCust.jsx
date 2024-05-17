@@ -13,6 +13,7 @@ const RestrauntCust = () => {
   const [clicked, setClicked] = useState(false);
   const [searchTermByCat, setSearchTermByCat] = useState("");
   const [catId, setCatId] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -75,6 +76,13 @@ const RestrauntCust = () => {
       </div>
     );
   }
+  if (products.length == 0) {
+    return (
+      <div>
+        <h1>No Products Found</h1>
+      </div>
+    );
+  }
   const handleFilter = async (catid) => {
     setClicked(true);
     setCatId(catid);
@@ -126,53 +134,89 @@ const RestrauntCust = () => {
       <h1 className="text-center text-xl font-bold">
         {restaurant.toUpperCase()}
       </h1>
+      <div className="flex justify-center my-5">
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Enter Category Name"
+          />
+          <button type="submit">Search</button>
+        </form>
+      </div>
 
-      {
-        <div>
-          {restCats.map((restCat) => (
-            <div key={restCat.id} onClick={() => handleFilter(restCat.id)}>
-              <h1>{restCat.name}</h1>
-              <h2>{restCat.description}</h2>
-              <Base64decode base64String={restCat.returnedimage} />
-            </div>
-          ))}
-        </div>
-      }
-      <div>
-        {!clicked && (
-          <form onSubmit={handleProductSearch}>
-            <input
-              type="text"
-              value={searchTermProduct}
-              onChange={(e) => setSearchTermProduct(e.target.value)}
-              placeholder="Enter Product Name"
-            />
-            <button type="submit">Search</button>
-          </form>
+      <div className=" flex justify-center flex-wrap  gap-10">
+        {restCats.map((restCat) => (
+          <div
+            key={restCat.id}
+            onClick={() => handleFilter(restCat.id)}
+            className="flex flex-col  bg-blue-400 gap-4 p-3 cursor-pointer"
+          >
+            <Base64decode base64String={restCat.returnedimage} />
+            <h1>Category: {restCat.name}</h1>
+            <h2>Description: {restCat.description}</h2>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col justify-center">
+        {!clicked && ( //if clicked is false its normal product search
+          <div className="flex justify-center mt-10">
+            <form onSubmit={handleProductSearch}>
+              <input
+                type="text"
+                value={searchTermProduct}
+                onChange={(e) => setSearchTermProduct(e.target.value)}
+                placeholder="Enter Product Name"
+                className="shadow-lg p-2"
+              />
+              <button
+                type="submit"
+                className="bg-blue-400 m-1 text-white rounded-md p-2"
+              >
+                Search
+              </button>
+            </form>
+          </div>
         )}
-        {clicked && (
-          <div>
+        {clicked && ( //if clicked is true its product by category search
+          <div className="flex justify-center mt-10">
             <form onSubmit={handleProductByCatSearch}>
               <input
                 type="text"
                 value={searchTermByCat}
                 onChange={(e) => setSearchTermByCat(e.target.value)}
-                placeholder="Enter Producty Name"
+                placeholder="Enter Product Name for Category"
+                className="shadow-lg p-2"
               />
-              <button type="submit">Search</button>
+              <button
+                type="submit"
+                className="bg-blue-400 m-1 text-white rounded-md p-2"
+              >
+                Search by Category
+              </button>
             </form>
           </div>
         )}
-        {products.map((product) => (
-          <div key={product.id}>
-            <h1>{product.name}</h1>
-            <h2>{product.price}</h2>
-            <Base64decode base64String={product.returnedimg} />
-            <button onClick={() => navigate(`/product/${product.id}`)}>
-              View Product
-            </button>
-          </div>
-        ))}
+        <div className="flex justify-center gap-4 mt-10">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="flex flex-col justify-center items-center gap-5 bg-blue-300 p-5 "
+            >
+              <Base64decode base64String={product.returnedimg} />
+              <h1>Name: {product.name}</h1>
+              <h2>Price: ₹{product.price}</h2>
+              <button
+                onClick={() => navigate(`/product/${product.id}`)}
+                className="bg-blue-400 p-3 text-white"
+              >
+                View Product
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
