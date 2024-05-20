@@ -18,6 +18,7 @@ import ProductIndividual from "./pages/ProductIndividual";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import ResAdmincheck from "./pages/ResAdmincheck";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/product/:id" element={<ProductIndividual />} />
           <Route path="/cart/:id" element={<Cart />} />
           <Route path="/orders/:id" element={<Orders />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/restraunt/orders" element={<ResAdmincheck />} />
         </Routes>
       </BrowserRouter>

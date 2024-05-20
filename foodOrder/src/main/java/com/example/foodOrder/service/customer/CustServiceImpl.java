@@ -88,16 +88,8 @@ public class CustServiceImpl implements CustService{
         System.out.println(user);
         userRepo.delete(user);
     }
-    public void sendEmail(Long userId,String fromEmail, String body,String subject){
-        User user=userRepo.findById(userId).get();
-        SimpleMailMessage mailMessage=new SimpleMailMessage();
-        mailMessage.setSubject(subject);
-        mailMessage.setText("Hello from "+user.getName());
-        mailMessage.setFrom(fromEmail);
-        mailMessage.setTo("mittalvaibhav277@gmail.com");
-        emailsender.send(mailMessage);
-        System.out.println("sent");
-
+    public void sendEmail(Long userId,String toEmail, String body,String subject){
+        return;
 
     }
 
@@ -211,6 +203,14 @@ public class CustServiceImpl implements CustService{
         OrderItem savedOne=orderItemRepo.save(orderItem);
         OrderItemDto orderItemDto=new OrderItemDto();
         orderItemDto.setId(savedOne.getId());
+        String body="Id:"+savedOne.getId()+ "Order Total "+total+"Date: "+savedOne.getOrderedAt().getTime()+"Restraunt "+savedOne.getRestraunt()+"Status: "+savedOne.getOrderStatus();
+        SimpleMailMessage mailMessage=new SimpleMailMessage();
+        mailMessage.setSubject("Your order details");
+        mailMessage.setText("Hello "+user.getName()+body);
+        mailMessage.setFrom("mittalvaibhav277@gmail.com");
+        mailMessage.setTo(user.getEmail());
+        emailsender.send(mailMessage);
+        System.out.println("sent");
         return orderItemDto;
 
     }

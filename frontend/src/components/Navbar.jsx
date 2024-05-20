@@ -67,6 +67,10 @@ const Navbar = () => {
                 Orders
               </button>
               <button onClick={() => navigate(`/customer/shop`)}>Shop</button>
+              <Link to="/contact" className="">
+                {" "}
+                Contact
+              </Link>
             </li>
           )}
           {currentUser && (

@@ -208,9 +208,12 @@ public class CustomerCont {
         return ResponseEntity.ok().body(orderItemDtos);
     }
     @PostMapping("/contact/{userId}")
-    public ResponseEntity<?> sendEmail(@PathVariable Long userId,ContactReq contactReq){
+    public ResponseEntity<?> sendEmail(@PathVariable Long userId,@RequestBody ContactReq contactReq){
 
         custService.sendEmail(userId,contactReq.getEmail(),contactReq.getMessage(),contactReq.getSubject());
+        Map<String,String> donemap=new HashMap<>();
+        donemap.put("message","Mail Sent Successfully to admins from "+userId);
+        return ResponseEntity.ok().body(donemap);
     }
 
 }
