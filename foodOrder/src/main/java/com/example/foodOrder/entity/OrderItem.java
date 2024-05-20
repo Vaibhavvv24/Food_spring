@@ -2,6 +2,7 @@ package com.example.foodOrder.entity;
 
 import com.example.foodOrder.dto.OrderItemDto;
 import com.example.foodOrder.enums.OrderStatus;
+import com.example.foodOrder.enums.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
@@ -40,6 +41,10 @@ public class OrderItem {
 
     private OrderStatus orderStatus;
 
+    private String paymentId;
+
+    private PaymentStatus paymentStatus;
+
     private Date orderedAt;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
@@ -65,6 +70,22 @@ public class OrderItem {
 
     public OrderItem(){
 
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public OrderItem(OrderStatus orderStatus) {

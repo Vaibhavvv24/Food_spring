@@ -47,4 +47,6 @@ public interface CustService {
 
     void sendEmail(Long userId, String email, String message, String subject);
     PaymentResponse createPayment(Long orderId, String jwt) throws RazorpayException;
+
+    ApiRes successfulPayment(String paymentid, Long orderId) throws RazorpayException;
 }

@@ -3,7 +3,9 @@ package com.example.foodOrder.service.customer;
 import com.example.foodOrder.dto.*;
 import com.example.foodOrder.entity.*;
 import com.example.foodOrder.enums.OrderStatus;
+import com.example.foodOrder.enums.PaymentStatus;
 import com.example.foodOrder.repo.*;
+import com.razorpay.Payment;
 import com.razorpay.PaymentLink;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
@@ -103,7 +105,7 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
-    public  PaymentResponse createPayment(Long orderId, String jwt) throws RazorpayException {
+    public PaymentResponse createPayment(Long orderId, String jwt) throws RazorpayException {
         OrderItem orderItem=orderItemRepo.findById(orderId).get();
         RazorpayClient razorpayClient=new RazorpayClient(apikey,apisecret);
 
@@ -130,6 +132,29 @@ public class CustServiceImpl implements CustService{
         paymentResponse.setPaymentId(paymentId);
         paymentResponse.setPaymentLink(paymenturl);
         return paymentResponse;
+    }
+
+    @Override
+    public ApiRes successfulPayment(String paymentid, Long orderId) throws RazorpayException {
+        OrderItem orderItem=orderItemRepo.findById(orderId).get();
+        RazorpayClient razorpayClient=new RazorpayClient(apikey,apisecret);
+        try{
+            Payment payment=razorpayClient.payments.fetch(paymentid);
+            if(payment.get("status").equals("captured")){
+                orderItem.setPaymentId(paymentid);
+                orderItem.setPaymentStatus(PaymentStatus.COMPLETED);
+            }
+            else{
+                orderItem.setPaymentStatus(PaymentStatus.FAILED);
+            }
+            ApiRes apiRes=new ApiRes();
+            apiRes.setMessage("Payment Successful");
+            apiRes.setStatus(true);
+            return apiRes;
+        }
+        catch (RazorpayException e){
+            throw new RazorpayException(e.getMessage());
+        }
     }
 
     @Override
