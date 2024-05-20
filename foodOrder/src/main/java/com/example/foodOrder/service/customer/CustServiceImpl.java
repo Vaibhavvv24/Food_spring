@@ -4,7 +4,12 @@ import com.example.foodOrder.dto.*;
 import com.example.foodOrder.entity.*;
 import com.example.foodOrder.enums.OrderStatus;
 import com.example.foodOrder.repo.*;
+import com.razorpay.PaymentLink;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +42,10 @@ public class CustServiceImpl implements CustService{
         }
     }
 
+    @Value("{razorpay.api.key}")
+    private String apikey;
+    @Value("{razorpay.api.secret}")
+    private String apisecret;
     private final UserRepo userRepo;
 
     private final CatRepo catRepo;
@@ -91,6 +100,36 @@ public class CustServiceImpl implements CustService{
     public void sendEmail(Long userId,String toEmail, String body,String subject){
         return;
 
+    }
+
+    @Override
+    public  PaymentResponse createPayment(Long orderId, String jwt) throws RazorpayException {
+        OrderItem orderItem=orderItemRepo.findById(orderId).get();
+        RazorpayClient razorpayClient=new RazorpayClient(apikey,apisecret);
+
+        JSONObject paymentLinkRequest=new JSONObject();
+        paymentLinkRequest.put("amount",orderItem.getTotal()*100);
+        paymentLinkRequest.put("currency","INR");
+
+        JSONObject customer=new JSONObject();
+        customer.put("name",orderItem.getUser().getName());
+        customer.put("email",orderItem.getUser().getEmail());
+        paymentLinkRequest.put("customer",customer);
+
+        JSONObject notification=new JSONObject();
+        notification.put("sms",true);
+        notification.put("email",true);
+        paymentLinkRequest.put("notify",notification);
+
+        paymentLinkRequest.put("callback_url","http://localhost:5173/payment/"+orderId);
+        paymentLinkRequest.put("callback_method","get");
+        PaymentLink paymentLink=razorpayClient.paymentLink.create(paymentLinkRequest);
+        String paymenturl=paymentLink.get("short_url");
+        String paymentId=paymentLink.get("id");
+        PaymentResponse paymentResponse=new PaymentResponse();
+        paymentResponse.setPaymentId(paymentId);
+        paymentResponse.setPaymentLink(paymenturl);
+        return paymentResponse;
     }
 
     @Override

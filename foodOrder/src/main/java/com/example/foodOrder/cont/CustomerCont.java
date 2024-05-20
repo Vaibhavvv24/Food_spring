@@ -7,6 +7,8 @@ import com.example.foodOrder.repo.CartRepo;
 import com.example.foodOrder.repo.UserRepo;
 import com.example.foodOrder.service.UserService;
 import com.example.foodOrder.service.customer.CustService;
+import com.razorpay.RazorpayException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +24,7 @@ import java.util.*;
 @CrossOrigin(origins = "http://localhost:5173")
 public class CustomerCont {
     private final CustService custService;
+
 
 
     public CustomerCont(CustService custService) {
@@ -214,6 +217,12 @@ public class CustomerCont {
         Map<String,String> donemap=new HashMap<>();
         donemap.put("message","Mail Sent Successfully to admins from "+userId);
         return ResponseEntity.ok().body(donemap);
+    }
+    @PostMapping("/order/payment/{orderId}")
+    public ResponseEntity<PaymentResponse> payment(@PathVariable Long orderId,@RequestHeader("Authorization") String jwt) throws RazorpayException {
+        PaymentResponse paymentResponse= custService.createPayment(orderId,jwt);
+        return ResponseEntity.ok().body(paymentResponse);
+
     }
 
 }

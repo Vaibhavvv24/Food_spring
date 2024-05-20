@@ -1,6 +1,7 @@
 package com.example.foodOrder.service.customer;
 
 import com.example.foodOrder.dto.*;
+import com.razorpay.RazorpayException;
 
 import java.sql.Blob;
 import java.util.List;
@@ -45,4 +46,5 @@ public interface CustService {
     List<OrderItemDto> getOrders(Long userId);
 
     void sendEmail(Long userId, String email, String message, String subject);
+    PaymentResponse createPayment(Long orderId, String jwt) throws RazorpayException;
 }
