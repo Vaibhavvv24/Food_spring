@@ -2,6 +2,7 @@ package com.example.foodOrder.dto;
 
 import com.example.foodOrder.entity.*;
 import com.example.foodOrder.enums.OrderStatus;
+import com.example.foodOrder.enums.PaymentStatus;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,12 @@ public class OrderItemDto {
 
     private String restName;
 
+    private PaymentStatus paymentStatus;
+
+    private String paymentid;
+
+
+
     private OrderStatus orderStatus;
 
     private Date orderedAt;
@@ -36,6 +43,21 @@ public class OrderItemDto {
 
     }
 
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentid() {
+        return paymentid;
+    }
+
+    public void setPaymentid(String paymentid) {
+        this.paymentid = paymentid;
+    }
 
     public OrderItemDto(OrderStatus orderStatus, Date orderedAt) {
         this.orderStatus = orderStatus;

@@ -263,6 +263,8 @@ public class CustServiceImpl implements CustService{
         orderItem.setOrderedAt(new Date(System.currentTimeMillis()));
         orderItem.setOrder(order);
         orderItem.setTotal(total);
+        orderItem.setPaymentStatus(PaymentStatus.PENDING);
+        orderItem.setPaymentId(null);
 
         OrderItem savedOne=orderItemRepo.save(orderItem);
         OrderItemDto orderItemDto=new OrderItemDto();
@@ -302,6 +304,8 @@ public class CustServiceImpl implements CustService{
             orderItemDto.setOwnerName(orderItem.getUser().getName());
             orderItemDto.setRestName(orderItem.getRestraunt().getName());
             orderItemDto.setTotal(orderItem.getTotal());
+            orderItemDto.setPaymentStatus(orderItem.getPaymentStatus());
+            orderItemDto.setPaymentid(orderItem.getPaymentId());
 //            orderItemDto.setCartId(orderItem.getCart().getId());
             orderItemDtos.add(orderItemDto);
 
