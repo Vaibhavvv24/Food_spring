@@ -4,6 +4,9 @@ import com.example.foodOrder.dto.*;
 import com.example.foodOrder.entity.*;
 import com.example.foodOrder.enums.OrderStatus;
 import com.example.foodOrder.repo.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +40,12 @@ public class CustServiceImpl implements CustService{
     private final UserRepo userRepo;
 
     private final CatRepo catRepo;
+
+
+    @Autowired
+    private JavaMailSender emailsender;
+
+
 
 
 
@@ -78,6 +87,18 @@ public class CustServiceImpl implements CustService{
         User user=userRepo.findById(userId).get();
         System.out.println(user);
         userRepo.delete(user);
+    }
+    public void sendEmail(Long userId,String fromEmail, String body,String subject){
+        User user=userRepo.findById(userId).get();
+        SimpleMailMessage mailMessage=new SimpleMailMessage();
+        mailMessage.setSubject(subject);
+        mailMessage.setText("Hello from "+user.getName());
+        mailMessage.setFrom(fromEmail);
+        mailMessage.setTo("mittalvaibhav277@gmail.com");
+        emailsender.send(mailMessage);
+        System.out.println("sent");
+
+
     }
 
     @Override

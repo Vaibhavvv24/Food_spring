@@ -43,4 +43,6 @@ public interface CustService {
     OrderItemDto addOrder(Long userId, Long restrauntId,int total);
 
     List<OrderItemDto> getOrders(Long userId);
+
+    void sendEmail(Long userId, String email, String message, String subject);
 }

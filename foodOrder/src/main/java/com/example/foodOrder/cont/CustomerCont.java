@@ -207,5 +207,10 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(orderItemDtos);
     }
+    @PostMapping("/contact/{userId}")
+    public ResponseEntity<?> sendEmail(@PathVariable Long userId,ContactReq contactReq){
+
+        custService.sendEmail(userId,contactReq.getEmail(),contactReq.getMessage(),contactReq.getSubject());
+    }
 
 }

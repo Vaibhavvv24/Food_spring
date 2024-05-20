@@ -1,4 +1,16 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mittalvaibhav277@gmail.com
+    password: bomotfuefpwcjkxs
+    properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+
   main:
     allow-circular-references:
       true
