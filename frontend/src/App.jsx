@@ -55,7 +55,6 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/restraunt/orders" element={<ResAdmincheck />} />
           <Route path="/payment/:orderId" element={<PaymentSuccess />} />
-          <Route path="/make-payment/:id" element={<CreatePayment />} />
         </Routes>
       </BrowserRouter>
     </div>

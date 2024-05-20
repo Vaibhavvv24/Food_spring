@@ -25,6 +25,7 @@ const CreatePayment = () => {
     //Navigate(" " + data.paymentLink);
 
     setResponse(data);
+    alert("Payment Link sent on email");
   }
 
   useEffect(() => {
