@@ -203,10 +203,10 @@ public class CustServiceImpl implements CustService{
         OrderItem savedOne=orderItemRepo.save(orderItem);
         OrderItemDto orderItemDto=new OrderItemDto();
         orderItemDto.setId(savedOne.getId());
-        String body="Id:"+savedOne.getId()+ "Order Total "+total+"Date: "+savedOne.getOrderedAt().getTime()+"Restraunt "+savedOne.getRestraunt()+"Status: "+savedOne.getOrderStatus();
+        String body="Order Id:"+savedOne.getId()+" " + "Order Total: "+"₹"+total+" "+"Date: "+savedOne.getOrderedAt()+" "+"Restraunt: "+savedOne.getRestraunt().getName()+" "+"Status: "+savedOne.getOrderStatus();
         SimpleMailMessage mailMessage=new SimpleMailMessage();
         mailMessage.setSubject("Your order details");
-        mailMessage.setText("Hello "+user.getName()+body);
+        mailMessage.setText("Hello "+user.getName()+" "+body);
         mailMessage.setFrom("mittalvaibhav277@gmail.com");
         mailMessage.setTo(user.getEmail());
         emailsender.send(mailMessage);
