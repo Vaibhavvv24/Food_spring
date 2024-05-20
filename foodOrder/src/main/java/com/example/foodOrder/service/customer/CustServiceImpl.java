@@ -44,9 +44,9 @@ public class CustServiceImpl implements CustService{
         }
     }
 
-    @Value("{razorpay.api.key}")
+    @Value("${razorpay.api.key}")
     private String apikey;
-    @Value("{razorpay.api.secret}")
+    @Value("${razorpay.api.secret}")
     private String apisecret;
     private final UserRepo userRepo;
 
@@ -107,6 +107,8 @@ public class CustServiceImpl implements CustService{
     @Override
     public PaymentResponse createPayment(Long orderId, String jwt) throws RazorpayException {
         OrderItem orderItem=orderItemRepo.findById(orderId).get();
+        System.out.println(apikey);
+        System.out.println(apisecret);
         RazorpayClient razorpayClient=new RazorpayClient(apikey,apisecret);
 
         JSONObject paymentLinkRequest=new JSONObject();
@@ -143,9 +145,11 @@ public class CustServiceImpl implements CustService{
             if(payment.get("status").equals("captured")){
                 orderItem.setPaymentId(paymentid);
                 orderItem.setPaymentStatus(PaymentStatus.COMPLETED);
+                orderItemRepo.save(orderItem);
             }
             else{
                 orderItem.setPaymentStatus(PaymentStatus.FAILED);
+                orderItemRepo.save(orderItem);
             }
             ApiRes apiRes=new ApiRes();
             apiRes.setMessage("Payment Successful");

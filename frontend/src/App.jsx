@@ -19,6 +19,8 @@ import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import ResAdmincheck from "./pages/ResAdmincheck";
 import Contact from "./pages/Contact";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import CreatePayment from "./pages/CreatePayment";
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function App() {
           <Route path="/orders/:id" element={<Orders />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/restraunt/orders" element={<ResAdmincheck />} />
+          <Route path="/payment/:orderId" element={<PaymentSuccess />} />
+          <Route path="/make-payment/:id" element={<CreatePayment />} />
         </Routes>
       </BrowserRouter>
     </div>

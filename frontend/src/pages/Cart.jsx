@@ -54,7 +54,7 @@ const Cart = () => {
     console.log(data);
     alert("Order placed successfully");
     handleDelete();
-    navigate("/");
+    navigate(`/make-payment/${data.id}`);
   }
 
   const handleRemove = async (prodId) => {
@@ -84,7 +84,6 @@ const Cart = () => {
     const data = await res.json();
     console.log(data);
     alert("Cart cleared successfully");
-    navigate("/");
   };
   if (cart.length === 0 || cart === null) {
     return (
