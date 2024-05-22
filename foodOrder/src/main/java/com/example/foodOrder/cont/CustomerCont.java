@@ -210,7 +210,7 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(orderItemDtos);
     }
-    @GetMapping("/order/{orderId}")
+    @GetMapping("/fetchorder/{orderId}")
     public ResponseEntity<?> getOrder(@PathVariable Long orderId){
         OrderItemDto orderItemDto=custService.getOrderById(orderId);
         if(orderItemDto==null){
