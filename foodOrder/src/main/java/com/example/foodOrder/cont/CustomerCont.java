@@ -225,8 +225,10 @@ public class CustomerCont {
 
     }
 
-    @GetMapping("/payments")
-    public ResponseEntity<ApiRes> redirect(@RequestParam(name = "payment_id") String paymentid,@RequestParam(name="order_id") Long orderId) throws RazorpayException {
+    @GetMapping("/payments/{paymentId}/order/{orderId}")
+    public ResponseEntity<ApiRes> redirect(@PathVariable String paymentid,@PathVariable Long orderId) throws RazorpayException {
+        System.out.println(paymentid);
+        System.out.println(orderId);
         ApiRes apiRes=custService.successfulPayment(paymentid,orderId);
         return ResponseEntity.ok().body(apiRes);
     }

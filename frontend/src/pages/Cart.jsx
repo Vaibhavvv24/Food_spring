@@ -14,8 +14,28 @@ function calculateTotal(cart) {
 const Cart = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
+  const [orderId, setOrderId] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
+
+  async function makePayment() {
+    const res = await fetch(
+      `http://localhost:8080/api/customer/order/payment/${orderId}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + currentUser.jwt,
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    console.log(data);
+    //Navigate(" " + data.paymentLink);
+    navigate(data.paymentLink);
+    alert("Payment Link sent on email");
+  }
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -54,7 +74,9 @@ const Cart = () => {
     console.log(data);
     alert("Order placed successfully");
     handleDelete();
-    navigate(`/payment/${data.id}`);
+
+    setOrderId(data.id);
+    //navigate(`/payment/${data.id}`);
   }
 
   const handleRemove = async (prodId) => {
@@ -128,6 +150,13 @@ const Cart = () => {
           >
             Place Order
           </button>
+          <button
+            onClick={makePayment}
+            className="bg-blue-500 text-white p-4 rounded-md"
+          >
+            Make Payment
+          </button>
+          <p className="text-center text-xl">Order Id: {orderId}</p>
         </div>
       </div>
     </div>
