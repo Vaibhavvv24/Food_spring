@@ -210,6 +210,15 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(orderItemDtos);
     }
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<?> getOrder(@PathVariable Long orderId){
+        OrderItemDto orderItemDto=custService.getOrderById(orderId);
+        if(orderItemDto==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(orderItemDto);
+    }
+
     @PostMapping("/contact/{userId}")
     public ResponseEntity<?> sendEmail(@PathVariable Long userId,@RequestBody ContactReq contactReq){
 

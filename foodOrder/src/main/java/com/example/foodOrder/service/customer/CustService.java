@@ -49,4 +49,6 @@ public interface CustService {
     PaymentResponse createPayment(Long orderId, String jwt) throws RazorpayException;
 
     ApiRes successfulPayment(String paymentid, Long orderId) throws RazorpayException;
+
+    OrderItemDto getOrderById(Long orderId);
 }

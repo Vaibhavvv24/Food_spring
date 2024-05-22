@@ -162,6 +162,24 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
+    public OrderItemDto getOrderById(Long orderId) {
+        OrderItem orderItem=orderItemRepo.findById(orderId).get();
+        OrderItemDto orderItemDto=new OrderItemDto();
+        orderItemDto.setTotal(orderItem.getTotal());
+        orderItemDto.setUserId(orderItem.getUser().getId());
+        orderItemDto.setId(orderItem.getId());
+        orderItemDto.setPaymentStatus(orderItem.getPaymentStatus());
+        orderItemDto.setOrderStatus(orderItem.getOrderStatus());
+        orderItemDto.setOwnerName(orderItem.getUser().getName());
+        orderItemDto.setPaymentid(orderItem.getPaymentId());
+        orderItemDto.setOrderedAt(orderItem.getOrderedAt());
+        orderItemDto.setRestId(orderItem.getRestraunt().getId());
+        orderItemDto.setRestName(orderItem.getRestraunt().getName());
+        orderItemDto.setOrderId(orderItem.getOrder().getId());
+        return orderItemDto;
+    }
+
+    @Override
     @Transactional
     public UserDto updateUser(UserDto userDto, Long userId) {
         User user=userRepo.findById(userId).get();
