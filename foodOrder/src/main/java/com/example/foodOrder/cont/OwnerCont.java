@@ -85,6 +85,12 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(productDtos);
     }
+    @GetMapping("/productsGet/{catid}/category/{restId}/search/{searchterm}")
+    public ResponseEntity<?> getProductsByName(@PathVariable Long restId,@PathVariable Long catid,@PathVariable String searchterm){
+        List<ProductDto> productDtos=ownerService.getProductsByCategoryAndName(restId,catid,searchterm);
+        System.out.println(productDtos.size());
+        return ResponseEntity.ok().body(productDtos);
+    }
     @DeleteMapping("/{restId}/products/delete/{prodId}")
     public ResponseEntity<?> deleteByProdId(@PathVariable Long prodId,@PathVariable Long restId){
         ownerService.deleteByProductId(prodId,restId);

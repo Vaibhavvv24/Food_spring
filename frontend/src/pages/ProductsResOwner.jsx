@@ -4,11 +4,12 @@ import Base64decode from "../components/Base64decode";
 
 const ProductsResOwner = () => {
   const [prods, setProds] = useState([]);
+  const [search, setSearchTerm] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
   const { catid } = useParams();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const fetchProducts = async () => {
     console.log(id);
     const res = await fetch(
@@ -46,10 +47,46 @@ const ProductsResOwner = () => {
     console.log(data);
     fetchProducts();
   };
+
+  async function handleSearch(e) {
+    e.preventDefault();
+    const res = await fetch(
+      `http://localhost:8080/api/owner/productsGet/${catid}/category/${id}/search/${search}`,
+      {
+        headers: {
+          Authorization: "Bearer " + currentUser.jwt,
+        },
+      }
+    );
+    const data = await res.json();
+
+    console.log(data[0]);
+    console.log(data);
+    setProds(data);
+    if (prods.length === 0) {
+      alert("No products found");
+    }
+    console.log(prods); //[]
+  }
+
   return (
     <div>
       <h1 className="text-3xl text-center">Products</h1>
       <div className="flex flex-col items-center">
+        <form className="flex my-10 gap-3">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="shadow-md w-full px-3 border border-black-200"
+          />
+          <button
+            onClick={handleSearch}
+            className="bg-green-300 p-3 rounded-md"
+          >
+            Search
+          </button>
+        </form>
         <ul className="flex flex-col items-center justify-center gap-5">
           {prods &&
             prods.map((product) => (

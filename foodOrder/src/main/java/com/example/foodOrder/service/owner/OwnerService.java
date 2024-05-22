@@ -30,4 +30,6 @@ public interface OwnerService {
     List<OrderItemDto> getOrders(Long restId,Long ownerId);
 
     void updateStatus(Long restId, Long ownerId, StatusReq statusReq);
+
+    List<ProductDto> getProductsByCategoryAndName(Long restId, Long catid, String searchterm);
 }

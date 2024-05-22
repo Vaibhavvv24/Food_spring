@@ -183,4 +183,9 @@ public class OwnerServiceImpl implements OwnerService{
         orderItemRepo.save(orderItem);
 
     }
+
+    @Override
+    public List<ProductDto> getProductsByCategoryAndName(Long restId, Long catid, String searchterm) {
+        return productRepo.findAllByRestrauntIdAndCategoryIdAndProductNameContaining(restId,catid,searchterm).stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
 }
