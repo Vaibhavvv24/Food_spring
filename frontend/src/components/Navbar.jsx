@@ -56,6 +56,7 @@ const Navbar = () => {
           {currentUser && currentUser.role === "OWNER" && (
             <li className="flex gap-3">
               <Link to="/owner/dashboard">Dashboard</Link>
+              <Link to="/restraunt/orders">Orders</Link>
             </li>
           )}
           {currentUser && currentUser.role === "CUSTOMER" && (

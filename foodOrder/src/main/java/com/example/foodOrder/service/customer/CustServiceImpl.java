@@ -139,13 +139,23 @@ public class CustServiceImpl implements CustService{
     @Override
     public ApiRes successfulPayment(String paymentid, Long orderId) throws RazorpayException {
         OrderItem orderItem=orderItemRepo.findById(orderId).get();
+        Restraunt restraunt=repo.findById(orderItem.getRestraunt().getId()).get();
+        User user=userRepo.findById(restraunt.getOwner().getId()).get();
+        String ownerEmail= user.getEmail();
         RazorpayClient razorpayClient=new RazorpayClient(apikey,apisecret);
         try{
             Payment payment=razorpayClient.payments.fetch(paymentid);
             if(payment.get("status").equals("captured")){
                 orderItem.setPaymentId(paymentid);
                 orderItem.setPaymentStatus(PaymentStatus.COMPLETED);
-                orderItemRepo.save(orderItem);
+                OrderItem orderItem1=orderItemRepo.save(orderItem);
+                SimpleMailMessage mailMessage=new SimpleMailMessage();
+                String body="Customer Name: "+orderItem.getUser().getName()+" "+"Order Id: "+orderItem.getId()+" " + "Order Total: "+"₹"+orderItem.getTotal()+" "+"Date: "+orderItem.getOrderedAt()+" "+" "+"Order Status: "+orderItem.getOrderStatus()+"Payment Status: "+orderItem1.getPaymentStatus()+"Payment Reference Id: "+orderItem1.getPaymentId();
+                mailMessage.setSubject("Order Received from "+orderItem.getUser().getName());
+                mailMessage.setText("Hello "+user.getName()+" "+body);
+                mailMessage.setFrom("mittalvaibhav277@gmail.com");
+                mailMessage.setTo(ownerEmail);
+                emailsender.send(mailMessage);
             }
             else{
                 orderItem.setPaymentStatus(PaymentStatus.FAILED);

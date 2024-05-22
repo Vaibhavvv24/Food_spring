@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const PaymentSuccess = () => {
-  const [refId, setRefId] = useState("");
-  // const [paymentId, setPaymentId] = useState("");
-  const [status, setStatus] = useState("");
   const { orderId } = useParams();
   const [param, setParams] = useSearchParams();
   const paymentId = param.get("razorpay_payment_id");
@@ -12,6 +9,7 @@ const PaymentSuccess = () => {
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
+  const Navigate = useNavigate();
   useEffect(() => {
     const fetchPaymentDetails = async () => {
       try {
@@ -32,8 +30,6 @@ const PaymentSuccess = () => {
 
         const data = await response.json();
         //setPaymentId(data.paymentId);
-        setRefId(data.refId);
-        setStatus(data.status);
         console.log(data);
       } catch (error) {
         console.error(error);
@@ -43,8 +39,10 @@ const PaymentSuccess = () => {
   }, [orderId]);
   return (
     <div>
-      <h1>Payment Successful</h1>
-      <p>{orderId}</p>
+      <h1>Payment Successful for order {orderId}</h1>
+      <button onClick={() => Navigate(`/orders/${currentUser.id}`)}>
+        Go to Orders to Check Status of Order
+      </button>
     </div>
   );
 };

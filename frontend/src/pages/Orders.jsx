@@ -45,16 +45,23 @@ const Orders = () => {
       <div className="grid grid-row-3 mx-10 gap-4">
         {orders.map((item) => (
           <div className="flex flex-row gap-4 bg-blue-200 p-10" key={item.id}>
-            <p className="text-lg font-semibold">
+            <p className="text-md font-semibold">
               Customer name: {item.ownerName}
             </p>
-            <p className="text-lg font-semibold">OrderId: {item.id}</p>
-            <p className="text-lg font-semibold">Status: {item.orderStatus}</p>
-            <p className="text-lg font-semibold">Restraunt: {item.restName}</p>
+            <p className="text-md font-semibold">OrderId: {item.id}</p>
+            <p className="text-md font-semibold">Status: {item.orderStatus}</p>
+            <p className="text-md font-semibold">Restraunt: {item.restName}</p>
 
-            <p className="text-lg font-semibold">Bill: ₹{item.total}</p>
-            <p className="text-lg font-semibold">
+            <p className="text-md font-semibold">Bill: ₹{item.total}</p>
+            <p className="text-md font-semibold">
               {convertDate(item.orderedAt)}
+            </p>
+            <p className="text-md font-semibold">
+              Payment Status: {item.paymentStatus}
+            </p>
+            <p className="text-md font-semibold">
+              Payment reference Id:{" "}
+              {item.paymentid === null ? "NA" : item.paymentid}
             </p>
           </div>
         ))}
