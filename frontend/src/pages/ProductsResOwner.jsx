@@ -7,11 +7,12 @@ const ProductsResOwner = () => {
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const { id } = useParams();
+  const { catid } = useParams();
   const navigate = useNavigate();
   const fetchProducts = async () => {
     console.log(id);
     const res = await fetch(
-      `http://localhost:8080/api/owner/productsGet/${id}`,
+      `http://localhost:8080/api/owner/productsGet/${catid}/category/${id}`,
       {
         headers: {
           Authorization: "Bearer " + currentUser.jwt,

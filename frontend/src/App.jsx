@@ -45,7 +45,10 @@ function App() {
             element={<OwnerCategories />}
           />
           <Route path="/owner/:catid/product/:id" element={<AddProduct />} />
-          <Route path="/owner/products/:id" element={<ProductsResOwner />} />
+          <Route
+            path="/owner/:catid/products/:id"
+            element={<ProductsResOwner />}
+          />
           <Route path="/customer/profile/:id" element={<Profile />} />
           <Route path="/customer/shop" element={<Shop />} />
           <Route path="/shop/restraunt/:id" element={<RestrauntCust />} />

@@ -76,9 +76,9 @@ public class OwnerCont {
         }
         return ResponseEntity.ok().body(productDto);
     }
-    @GetMapping("/productsGet/{restId}")
-    public ResponseEntity<?> getProducts(@PathVariable Long restId){
-        List<ProductDto> productDtos=ownerService.getProducts(restId);
+    @GetMapping("/productsGet/{catid}/category/{restId}")
+    public ResponseEntity<?> getProducts(@PathVariable Long restId,@PathVariable Long catid){
+        List<ProductDto> productDtos=ownerService.getProductsByCategory(restId,catid);
         System.out.println(productDtos.size());
         if(productDtos.isEmpty()) {
             return ResponseEntity.notFound().build();

@@ -72,7 +72,7 @@ const OwnerCategories = () => {
             <Base64decode base64String={category.returnedimage} />
             <button
               className="p-2 bg-green-200 rounded-md "
-              onClick={() => navigate(`/owner/products/${id}`)}
+              onClick={() => navigate(`/owner/${category.id}/products/${id}`)}
             >
               View products
             </button>
