@@ -12,5 +12,5 @@ import java.util.List;
 public interface ResRepo extends JpaRepository<Restraunt,Long> {
     Restraunt findByOwnerId(Long ownerId);
 
-    List<Restraunt> findAllByNameContaing(String name);
+    List<Restraunt> findAllByNameContaining(String name);
 }

@@ -8,6 +8,7 @@ const Shop = () => {
   const [restraunts, setRestaurants] = useState([]);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [searchTerm, setSearchTerm] = useState("");
+  const [resName, setResName] = useState("");
   async function handleSearch(e) {
     e.preventDefault();
     const res = await fetch(
@@ -23,6 +24,24 @@ const Shop = () => {
     setCategories(data);
   }
 
+  async function handleRestrauntSearch(e) {
+    e.preventDefault();
+    const res = await fetch(
+      `http://localhost:8080/api/customer/restraunts/search/${resName}`,
+      {
+        headers: {
+          Authorization: "Bearer " + currentUser.jwt,
+        },
+      }
+    );
+    const data = await res.json();
+    console.log(data);
+    if (data.length === 0) {
+      alert("No restraunts found");
+      window.location.reload();
+    }
+    setRestaurants(data);
+  }
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await fetch("http://localhost:8080/api/customer/categories", {
@@ -79,6 +98,17 @@ const Shop = () => {
       </div>
 
       <h1 className="text-center my-5 text-2xl">Restraunts</h1>
+      <div className="flex justify-center my-5">
+        <form onSubmit={handleRestrauntSearch}>
+          <input
+            type="text"
+            value={resName}
+            onChange={(e) => setResName(e.target.value)}
+            placeholder="Enter Restraunt Name"
+          />
+          <button type="submit">Search</button>
+        </form>
+      </div>
       <div className="flex justify-center flex-wrap gap-7">
         {restraunts.map((restraunt) => (
           <div

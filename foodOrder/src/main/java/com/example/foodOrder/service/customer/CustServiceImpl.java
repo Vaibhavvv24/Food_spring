@@ -191,7 +191,7 @@ public class CustServiceImpl implements CustService{
 
     @Override
     public List<ResDto> getResByName(String name) {
-        return repo.findAllByNameContaing(name).stream().map(Restraunt::getResDto).collect(Collectors.toList());
+        return repo.findAllByNameContaining(name).stream().map(Restraunt::getResDto).collect(Collectors.toList());
 
     }
 
