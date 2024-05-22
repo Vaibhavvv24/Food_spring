@@ -65,7 +65,7 @@ const Shop = () => {
           <button type="submit">Search</button>
         </form>
       </div>
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 flex-wrap">
         {categories.map((category) => (
           <div
             key={category.id}

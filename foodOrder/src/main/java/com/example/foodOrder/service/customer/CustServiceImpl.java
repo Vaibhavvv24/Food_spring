@@ -150,7 +150,7 @@ public class CustServiceImpl implements CustService{
                 orderItem.setPaymentStatus(PaymentStatus.COMPLETED);
                 OrderItem orderItem1=orderItemRepo.save(orderItem);
                 SimpleMailMessage mailMessage=new SimpleMailMessage();
-                String body="Customer Name: "+orderItem.getUser().getName()+" "+"Order Id: "+orderItem.getId()+" " + "Order Total: "+"₹"+orderItem.getTotal()+" "+"Date: "+orderItem.getOrderedAt()+" "+" "+"Order Status: "+orderItem.getOrderStatus()+"Payment Status: "+orderItem1.getPaymentStatus()+"Payment Reference Id: "+orderItem1.getPaymentId();
+                String body="Order Details: " +"Customer Name: "+orderItem.getUser().getName()+" "+"Order Id: "+orderItem.getId()+" " + "Order Total: "+"₹"+orderItem.getTotal()+" "+"Date: "+orderItem.getOrderedAt()+" "+" "+"Order Status: "+orderItem.getOrderStatus()+" "+"Payment Status: "+orderItem1.getPaymentStatus()+" "+"Payment Reference Id: "+orderItem1.getPaymentId();
                 mailMessage.setSubject("Order Received from "+orderItem.getUser().getName());
                 mailMessage.setText("Hello "+user.getName()+" "+body);
                 mailMessage.setFrom("mittalvaibhav277@gmail.com");
