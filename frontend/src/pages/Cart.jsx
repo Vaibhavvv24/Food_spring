@@ -14,6 +14,7 @@ function calculateTotal(cart) {
 const Cart = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
+
   //const [orderId, setOrderId] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -38,7 +39,28 @@ const Cart = () => {
     };
     fetchCart();
   }, []);
+  function checkformultiple(cart) {
+    const temporaryCart = [];
+    temporaryCart.push(cart[0].restId);
+    cart.map((item) => {
+      if (temporaryCart.includes(item.restId) && item !== cart[0]) {
+        temporaryCart.push(item.restId);
+      }
+      console.log(temporaryCart);
+    });
+    if (temporaryCart.length !== cart.length) {
+      alert("You have items from multiple restraunts in your cart");
+      alert("Keep items only from one restraunt in your cart");
+      return false;
+    } else {
+      return true;
+    }
+  }
   async function handleorder() {
+    if (!checkformultiple(cart)) {
+      return;
+    }
+
     const total = calculateTotal(cart);
     console.log(total);
     const res = await fetch(
