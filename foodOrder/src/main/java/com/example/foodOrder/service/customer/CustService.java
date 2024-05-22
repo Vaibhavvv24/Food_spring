@@ -53,4 +53,6 @@ public interface CustService {
     OrderItemDto getOrderById(Long orderId);
 
     List<ResDto> getResByName(String name);
+
+    List<ProductDto> getProdsByCategory(Long catId);
 }

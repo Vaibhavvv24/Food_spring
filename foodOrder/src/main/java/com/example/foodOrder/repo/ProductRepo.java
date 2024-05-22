@@ -18,4 +18,6 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     List<Product> findAllByRestrauntIdAndProductNameContaining(Long restrauntId,String productNam);
 
     List<Product> findAllByRestrauntIdAndCategoryIdAndProductNameContaining(Long restrauntId, Long catId, String productName);
+
+    List<Product> findAllByCategoryId(Long catId);
 }

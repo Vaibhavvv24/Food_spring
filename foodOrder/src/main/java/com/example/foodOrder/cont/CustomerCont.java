@@ -124,6 +124,15 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(productDtos);
     }
+    @GetMapping("/products/{catId}/category")
+    public ResponseEntity<?> getProductsByCat(@PathVariable Long catId){
+        List<ProductDto> productDtos=custService.getProdsByCategory(catId);
+        System.out.println(productDtos.size());
+        if(productDtos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(productDtos);
+    }
     @GetMapping("/category/{catId}/products/{restId}")          //done
     public ResponseEntity<?> getProductsByCat(@PathVariable Long restId,@PathVariable Long catId){
         List<ProductDto> productDtos=custService.getProdByCat(restId,catId);

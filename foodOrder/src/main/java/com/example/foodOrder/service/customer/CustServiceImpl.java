@@ -196,6 +196,11 @@ public class CustServiceImpl implements CustService{
     }
 
     @Override
+    public List<ProductDto> getProdsByCategory(Long catId) {
+        return productRepo.findAllByCategoryId(catId).stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional
     public UserDto updateUser(UserDto userDto, Long userId) {
         User user=userRepo.findById(userId).get();
