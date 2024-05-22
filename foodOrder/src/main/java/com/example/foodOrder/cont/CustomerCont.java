@@ -64,6 +64,12 @@ public class CustomerCont {
         }
         return ResponseEntity.ok().body(resDtos);
     }
+    @GetMapping("/restraunts/search/{name}")
+    public ResponseEntity<?> getResByName(@PathVariable String name){
+        List<ResDto> resDtos=custService.getResByName(name);
+        return ResponseEntity.ok().body(resDtos);
+    }
+
     @GetMapping("/categories")   //done
     public ResponseEntity<?> getAll(){
         List<CategoryDto> categoryDtos=custService.getCats();

@@ -62,10 +62,12 @@ const ProductsResOwner = () => {
 
     console.log(data[0]);
     console.log(data);
-    setProds(data);
-    if (prods.length === 0) {
+    if (data.length === 0) {
       alert("No products found");
+      window.location.reload();
     }
+    setProds(data);
+
     console.log(prods); //[]
   }
 

@@ -51,4 +51,6 @@ public interface CustService {
     ApiRes successfulPayment(String paymentid, Long orderId) throws RazorpayException;
 
     OrderItemDto getOrderById(Long orderId);
+
+    List<ResDto> getResByName(String name);
 }
