@@ -141,8 +141,11 @@ const RestrauntCust = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Enter Category Name"
+            className="shadow-lg p-3 border border-black rounded-md"
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="p-3 bg-blue-500 rounded-md">
+            Search
+          </button>
         </form>
       </div>
 

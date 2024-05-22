@@ -74,14 +74,17 @@ const Shop = () => {
       <h1 className="text-center my-5 text-2xl">Shop</h1>
       <h1 className="text-center my-5 text-2xl">Categories</h1>
       <div className="flex justify-center my-5">
-        <form onSubmit={handleSearch}>
+        <form onSubmit={handleSearch} className="flex gap-3">
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            className="shadow-lg p-3 border border-black rounded-md"
             placeholder="Enter Category Name"
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="p-3 bg-blue-500 rounded-md">
+            Search
+          </button>
         </form>
       </div>
       <div className="flex justify-center gap-4 flex-wrap">
@@ -104,9 +107,12 @@ const Shop = () => {
             type="text"
             value={resName}
             onChange={(e) => setResName(e.target.value)}
+            className="shadow-lg p-3 border border-black rounded-md"
             placeholder="Enter Restraunt Name"
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="p-3 bg-blue-500 rounded-md">
+            Search
+          </button>
         </form>
       </div>
       <div className="flex justify-center flex-wrap gap-7">

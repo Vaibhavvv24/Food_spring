@@ -29,8 +29,8 @@ const ProductCategoryBased = () => {
 
   return (
     <div>
-      <h1>Products</h1>
-      <ul className="grid grid-cols-3 gap-10 ">
+      <h1 className="text-center my-10 font-bold text-2xl">Products</h1>
+      <ul className="grid grid-cols-3 gap-10 m-7 ">
         {products.map((product) => (
           <li
             key={product.id}
@@ -42,7 +42,7 @@ const ProductCategoryBased = () => {
             <p>Restraunt: {product.restrauntName}</p>
             <button
               onClick={() => navigate(`/product/${product.id}`)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-3 rounded"
             >
               View Product Details
             </button>
