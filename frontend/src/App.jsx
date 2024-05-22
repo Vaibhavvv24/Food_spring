@@ -21,6 +21,7 @@ import ResAdmincheck from "./pages/ResAdmincheck";
 import Contact from "./pages/Contact";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import CreatePayment from "./pages/CreatePayment";
+import ProductCategoryBased from "./pages/ProductCategoryBased";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/customer/profile/:id" element={<Profile />} />
           <Route path="/customer/shop" element={<Shop />} />
           <Route path="/shop/restraunt/:id" element={<RestrauntCust />} />
+          <Route path="/shop/:catid" element={<ProductCategoryBased />} />
           <Route path="/product/:id" element={<ProductIndividual />} />
           <Route path="/cart/:id" element={<Cart />} />
           <Route path="/orders/:id" element={<Orders />} />
