@@ -145,9 +145,9 @@ const Profile = () => {
                 </button>
               </div>
               <div>
-                <button className="text-red-400" onClick={handleLogout}>
+                {/* <button className="text-red-400" onClick={handleLogout}>
                   Logout
-                </button>
+                </button> */}
               </div>
             </div>
           </form>

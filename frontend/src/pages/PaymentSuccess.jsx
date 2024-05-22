@@ -10,12 +10,26 @@ const PaymentSuccess = () => {
   const paymentId = param.get("razorpay_payment_id");
   console.log(orderId, paymentId);
 
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     const fetchPaymentDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/customer/payments/${paymentId}/order/${orderId}`
+          `http://localhost:8080/api/customer/payments`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + currentUser.jwt,
+            },
+            body: JSON.stringify({
+              paymentId: paymentId,
+              orderId: orderId,
+            }),
+          }
         );
+
         const data = await response.json();
         //setPaymentId(data.paymentId);
         setRefId(data.refId);

@@ -33,8 +33,8 @@ const Cart = () => {
 
     console.log(data);
     //Navigate(" " + data.paymentLink);
-    navigate(data.paymentLink);
-    alert("Payment Link sent on email");
+    window.location.replace(data.paymentLink);
+    //alert("Payment Link sent on email");
   }
 
   useEffect(() => {
